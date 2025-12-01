@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tecno🥭Rivas | Inicio</title>
+
+    <!-- Iconos de FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- MENU -->
+    <header>
+        <div class="container-header">
+            <h1 class="logo">Tecno🥭Rivas</h1>
+
+            <nav id="navbar">
+                <a href="index.html"><i class="fa-solid fa-house"></i> Inicio</a>
+                <a href="productos.html"><i class="fa-solid fa-box-open"></i> Productos</a>
+                <a href="servicios.html"><i class="fa-solid fa-print"></i> Servicios</a>
+                <a href="carrito.html"><i class="fa-solid fa-cart-shopping"></i> Carrito</a>
+                <a href="contacto.html"><i class="fa-solid fa-envelope"></i> Contacto</a>
+            </nav>
+
+            <div class="menu-toggle" id="mobile-menu">MENU <i class="fa-solid fa-bars"></i></div>
+        </div>
+    </header>
+
+    <!-- BANNER FADE -->
+    <div class="banner-container">
+        <img class="banner-slide fade" src="img/banner1.jpg" alt="">
+        <img class="banner-slide fade" src="img/banner2.jpg" alt="">
+        <img class="banner-slide fade" src="img/banner3.jpg" alt="">
+        <img class="banner-slide fade" src="img/banner4.jpg" alt="">
+        <img class="banner-slide fade" src="img/banner5.jpg" alt="">
+    </div>
+
+    <!-- INTRO -->
+    <section class="intro">
+        <h1>Bienvenido a Tecno🥭Rivas</h1>
+        <p>
+            Tu tienda de confianza en libreria, accesorios tecnologicos y servicios de impresion. 
+            Encuentra todo lo que necesitas con atencion profesional y precios competitivos.
+        </p>
+    </section>
+
+    <!-- PROMOCIONES -->
+    <section class="promos">
+        <div class="promo-item">
+            <img src="img/producto1.jpg" alt="">
+            <h3>Accesorios Tecnologicos</h3>
+            <p>Los gadgets que necesitas para trabajar, estudiar y mantenerte conectado con estilo y eficiencia.</p>
+        </div>
+
+        <div class="promo-item">
+            <img src="img/producto2.jpg" alt="">
+            <h3>Impresiones y Copias</h3>
+            <p>Calidad profesional en cada impresion, a color o blanco y negro, con rapidez y cuidado en cada detalle.</p>
+        </div>
+
+        <div class="promo-item">
+            <img src="img/producto3.jpg" alt="">
+            <h3>Articulos de Libreria</h3>
+            <p>Todo lo que necesitas para organizar tus estudios y proyectos, con materiales de la mejor calidad.</p>
+        </div>
+    </section>
+
+    <!-- PIE DE PAGINA -->
+    <footer>
+        <div class="footer-container">
+            <p>&copy; 2025 Tecno🥭Rivas</p>
+
+            <div class="redes">
+                <a href="https://www.facebook.com/p/Tecno-Rivas-100040930213703/?locale=es_LA" target="_blank">
+                    <i class="fab fa-facebook-f"></i> Facebook
+                </a>
+
+                <a href="https://www.instagram.com/tecnorivas2025/" target="_blank">
+                    <i class="fab fa-instagram"></i> Instagram
+                </a>
+
+                <a href="https://wa.me/50557733013" target="_blank">
+                    <i class="fab fa-whatsapp"></i> WhatsApp
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+
+    <script>
+        // Redireccion de promociones
+        document.querySelectorAll(".promo-item").forEach(item => {
+            item.addEventListener("click", () => {
+                let titulo = item.querySelector("h3").textContent.trim();
+
+                switch(titulo){
+                    case "Accesorios Tecnologicos":
+                        window.location.href = "productos.html";
+                        break;
+
+                    case "Impresiones y Copias":
+                        window.location.href = "servicios.html";
+                        break;
+
+                    case "Articulos de Libreria":
+                        window.location.href = "productos.html";
+                        break;
+
+                    default:
+                        console.warn("No se encontro ruta para:", titulo);
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

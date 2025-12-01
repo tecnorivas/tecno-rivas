@@ -1,0 +1,17 @@
+id,categoria,producto,descripcion,precio,stock,imagen
+1,libreria,cuaderno,doble raya,50,20,cuadernos1.jpg
+2,librería,borrador,blanco,20,15,borrador1.jpg
+3,librería,tajador,cilindrico de color,15,20,tajador1.jpg
+4,librería,marcador,colores,20,10,marcador1.jpg
+5,librería,cuaderno,universitario,60,20,cuadernos2.jpg
+6,librería,lapices,grafito,15,10,grafito1.jpg
+7,librería,cuaderno,cuadriculado,35,20,cuadernos3.jpg
+8,librería,lapicero,negro,15,20,lapiceros1.jpg
+9,librería,regla,metalica,10,30,reglas1.jpg
+10,librería,poroplas,lamina,40,20,poroplas1.jpg
+11,accesorios,usb,1tb,500,20,usb1.jpg
+12,accesorios,teclado,usb,250,10,teclado1.jpg
+13,accesorios,mouse,inalambrico,200,10,mouse1.jpg
+14,librería,cartulina,blanca,25,20,cartulina1.jpg
+15,librería,compas,azul,35,15,compas1.jpg
+16,librería,ley 431,transito,120,15,431.jpg

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tecno🥭Rivas | Productos</title>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- MENÚ -->
+    <header>
+        <div class="container-header">
+            <h1 class="logo">Tecno🥭Rivas</h1>
+            <nav id="navbar">
+                <a href="index.html"><i class="fa-solid fa-house"></i> Inicio</a>
+                <a href="productos.html"><i class="fa-solid fa-box-open"></i> Productos</a>
+                <a href="servicios.html"><i class="fa-solid fa-print"></i> Servicios</a>
+                <a href="carrito.html"><i class="fa-solid fa-cart-shopping"></i> Carrito</a>
+                <a href="contacto.html"><i class="fa-solid fa-envelope"></i> Contacto</a>
+            </nav>
+            <div class="menu-toggle" id="mobile-menu">MENU <i class="fa-solid fa-bars"></i></div>
+        </div>
+    </header>
+
+    <!-- BANNER -->
+    <div class="banner-container">
+        <img class="banner-slide fade" src="img/banner1.jpg" alt="">
+        <img class="banner-slide fade" src="img/banner2.jpg" alt="">
+        <img class="banner-slide fade" src="img/banner3.jpg" alt="">
+        <img class="banner-slide fade" src="img/banner4.jpg" alt="">
+        <img class="banner-slide fade" src="img/banner5.jpg" alt="">
+    </div>
+
+    <!-- INTRO -->
+    <section class="intro">
+        <h1>Nuestros Productos</h1>
+        <p>Explora nuestra amplia variedad de productos de librería y accesorios tecnológicos. Todo con calidad y al mejor precio.</p>
+    </section>
+
+    <!-- PRODUCTOS -->
+    <section class="promos">
+        <div id="product-list" class="product-grid"></div>
+    </section>
+
+    <!-- PIE DE PÁGINA -->
+    <footer>
+        <div class="footer-container">
+            <p>&copy; 2025 Tecno🥭Rivas</p>
+            <div class="redes">
+                <a href="https://www.facebook.com/p/Tecno-Rivas-100040930213703/?locale=es_LA" target="_blank">
+                    <i class="fab fa-facebook-f"></i> Facebook
+                </a>
+                <a href="https://www.instagram.com/tecnorivas2025/" target="_blank">
+                    <i class="fab fa-instagram"></i> Instagram
+                </a>
+                <a href="https://wa.me/50557733013" target="_blank">
+                    <i class="fab fa-whatsapp"></i> WhatsApp
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+
+// ---------------------------
+// Cargar productos desde CSV
+// ---------------------------
+function cargarProductos() {
+    fetch("productos.csv")
+    .then(res => res.text())
+    .then(csvText => {
+        const lines = csvText.trim().split("\n");
+        const headers = lines[0].split(",").map(h => h.trim().toLowerCase());
+        const productList = document.getElementById("product-list");
+        productList.innerHTML = "";
+
+        for (let i = 1; i < lines.length; i++) {
+            const values = lines[i].split(",");
+            if (values.length < headers.length) continue;
+
+            let item = {};
+            headers.forEach((h, idx) => item[h] = values[idx]?.trim());
+
+            if (!item.producto) continue;
+
+            const card = document.createElement("div");
+            card.classList.add("product-card");
+
+            card.innerHTML = `
+                <img src="img/${item.imagen}" alt="${item.producto}">
+                <h3>${item.producto}</h3>
+                <p class="descripcion">${item.descripcion || ""}</p>
+                <p class="precio">C$ ${item.precio || ""}</p>
+                <button class="btn-comprar">
+                    <i class="fa-solid fa-cart-plus"></i> Añadir al carrito
+                </button>
+            `;
+
+            // Evento botón
+            card.querySelector(".btn-comprar").addEventListener("click", () => {
+                agregarAlCarrito({
+                    producto: item.producto,
+                    precio: item.precio,
+                    imagen: `img/${item.imagen}`
+                });
+            });
+
+            productList.appendChild(card);
+        }
+    })
+    .catch(err => console.error("Error cargando productos desde CSV:", err));
+}
+
+
+// ------------------------------------------
+// Función agregar al carrito con LocalStorage
+// ------------------------------------------
+function agregarAlCarrito(producto) {
+    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    carrito.push(producto);
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+
+    alert(`${producto.producto} fue añadido a tu carrito, ve al menu y encontraras tus productos en carrito`);
+}
+
+
+// -----------------------
+// Animación del banner
+// -----------------------
+function iniciarBanner() {
+    let slideIndex = 0;
+    const slides = document.getElementsByClassName("banner-slide");
+
+    function showSlides() {
+        for (let i = 0; i < slides.length; i++) {
+            slides[i].style.opacity = 0;
+        }
+        slideIndex++;
+        if (slideIndex > slides.length) slideIndex = 1;
+        slides[slideIndex - 1].style.opacity = 1;
+        setTimeout(showSlides, 4000);
+    }
+
+    showSlides();
+}
+
+// Menú móvil
+        const menuToggle = document.getElementById("mobile-menu");
+        const navbar = document.getElementById("navbar");
+        const header = document.querySelector("header");
+
+        menuToggle.addEventListener("click", () => {
+            navbar.classList.toggle("active");
+            header.classList.toggle("menu-abierto");
+        });
+
+// -----------------------------------------
+// Lanzar TODO cuando el HTML ya está listo
+// -----------------------------------------
+window.addEventListener("DOMContentLoaded", () => {
+    cargarProductos();
+    iniciarBanner();
+});
+
+</script>
+
+</body>
+</html>
