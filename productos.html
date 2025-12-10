@@ -64,106 +64,107 @@
     </footer>
 
     <script>
+    // ---------------------------
+    // Cargar productos desde CSV
+    // ---------------------------
+    function cargarProductos() {
+        fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vSI0-L3i2sMLEZ8eXzZ02hzQJYe4eKNYxw_1KHDsPXJeL4fBXvZpkuGEHpuRgiIIULw6kPZ3GCaswP9/pub?gid=0&single=true&output=csv")
+        .then(res => res.text())
+        .then(csvText => {
+            const lines = csvText.trim().split("\n");
+            const headers = lines[0].split(",").map(h => h.trim().toLowerCase());
+            const productList = document.getElementById("product-list");
+            productList.innerHTML = "";
 
-// ---------------------------
-// Cargar productos desde CSV
-// ---------------------------
-function cargarProductos() {
-    fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vSI0-L3i2sMLEZ8eXzZ02hzQJYe4eKNYxw_1KHDsPXJeL4fBXvZpkuGEHpuRgiIIULw6kPZ3GCaswP9/pub?gid=0&single=true&output=csv")
-    .then(res => res.text())
-    .then(csvText => {
-        const lines = csvText.trim().split("\n");
-        const headers = lines[0].split(",").map(h => h.trim().toLowerCase());
-        const productList = document.getElementById("product-list");
-        productList.innerHTML = "";
-        
-        for (let i = 1; i < lines.length; i++) {
-            const values = lines[i].split(",");
-            if (values.length < headers.length) continue;
+            for (let i = 1; i < lines.length; i++) {
+                const values = lines[i].split(",");
+                if (values.length < headers.length) continue;
 
-            let item = {};
-            headers.forEach((h, idx) => item[h] = values[idx]?.trim());
-
-            if (!item.producto) continue;
-
-            const card = document.createElement("div");
-            card.classList.add("product-card");
-
-            card.innerHTML = `
-                <img src="${item.imagen.startsWith('http') ? item.imagen : 'img/' + item.imagen}" alt="${item.producto}">
-                <h3>${item.producto}</h3>
-                <p class="descripcion">${item.descripcion || ""}</p>
-                <p class="precio">C$ ${item.precio || ""}</p>
-                <button class="btn-comprar">
-                    <i class="fa-solid fa-cart-plus"></i> Añadir al carrito
-                </button>
-            `;
-
-            card.querySelector(".btn-comprar").addEventListener("click", () => {
-                agregarAlCarrito({
-                    producto: item.producto,
-                    precio: item.precio,
-                    imagen: item.imagen.startsWith('http') ? item.imagen : `img/${item.imagen}`
+                let item = {};
+                headers.forEach((h, idx) => {
+                    // Limpiar comillas y espacios invisibles de la celda
+                    item[h] = values[idx]?.trim().replace(/^"|"$/g, '');
                 });
-            });
 
-            productList.appendChild(card);
-        }
-    })
-    .catch(err => console.error("Error cargando productos desde Google Sheets:", err));
-}
+                if (!item.producto) continue;
 
-// ------------------------------------------
-// Función agregar al carrito con LocalStorage
-// ------------------------------------------
-function agregarAlCarrito(producto) {
-    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-    carrito.push(producto);
-    localStorage.setItem("carrito", JSON.stringify(carrito));
+                const card = document.createElement("div");
+                card.classList.add("product-card");
 
-    alert(`${producto.producto} fue añadido a tu carrito, ve al menu y encontraras tus productos en carrito`);
-}
+                // Usar directamente la URL si es externa
+                const imgSrc = item.imagen.startsWith('http') ? item.imagen : 'img/' + item.imagen;
 
+                card.innerHTML = `
+                    <img src="${imgSrc}" alt="${item.producto}">
+                    <h3>${item.producto}</h3>
+                    <p class="descripcion">${item.descripcion || ""}</p>
+                    <p class="precio">C$ ${item.precio || ""}</p>
+                    <button class="btn-comprar">
+                        <i class="fa-solid fa-cart-plus"></i> Añadir al carrito
+                    </button>
+                `;
 
-// -----------------------
-// Animación del banner
-// -----------------------
-function iniciarBanner() {
-    let slideIndex = 0;
-    const slides = document.getElementsByClassName("banner-slide");
+                card.querySelector(".btn-comprar").addEventListener("click", () => {
+                    agregarAlCarrito({
+                        producto: item.producto,
+                        precio: item.precio,
+                        imagen: imgSrc
+                    });
+                });
 
-    function showSlides() {
-        for (let i = 0; i < slides.length; i++) {
-            slides[i].style.opacity = 0;
-        }
-        slideIndex++;
-        if (slideIndex > slides.length) slideIndex = 1;
-        slides[slideIndex - 1].style.opacity = 1;
-        setTimeout(showSlides, 4000);
+                productList.appendChild(card);
+            }
+        })
+        .catch(err => console.error("Error cargando productos desde Google Sheets:", err));
     }
 
-    showSlides();
-}
+    // ------------------------------------------
+    // Función agregar al carrito con LocalStorage
+    // ------------------------------------------
+    function agregarAlCarrito(producto) {
+        let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+        carrito.push(producto);
+        localStorage.setItem("carrito", JSON.stringify(carrito));
 
-// Menú móvil
-        const menuToggle = document.getElementById("mobile-menu");
-        const navbar = document.getElementById("navbar");
-        const header = document.querySelector("header");
+        alert(`${producto.producto} fue añadido a tu carrito, ve al menú y encontrarás tus productos en carrito`);
+    }
 
-        menuToggle.addEventListener("click", () => {
-            navbar.classList.toggle("active");
-            header.classList.toggle("menu-abierto");
-        });
+    // -----------------------
+    // Animación del banner
+    // -----------------------
+    function iniciarBanner() {
+        let slideIndex = 0;
+        const slides = document.getElementsByClassName("banner-slide");
 
-// -----------------------------------------
-// Lanzar TODO cuando el HTML ya está listo
-// -----------------------------------------
-window.addEventListener("DOMContentLoaded", () => {
-    cargarProductos();
-    iniciarBanner();
-});
+        function showSlides() {
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.opacity = 0;
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) slideIndex = 1;
+            slides[slideIndex - 1].style.opacity = 1;
+            setTimeout(showSlides, 4000);
+        }
 
-</script>
+        showSlides();
+    }
+
+    // Menú móvil
+    const menuToggle = document.getElementById("mobile-menu");
+    const navbar = document.getElementById("navbar");
+    const header = document.querySelector("header");
+
+    menuToggle.addEventListener("click", () => {
+        navbar.classList.toggle("active");
+        header.classList.toggle("menu-abierto");
+    });
+
+    // Lanzar TODO cuando el HTML ya está listo
+    window.addEventListener("DOMContentLoaded", () => {
+        cargarProductos();
+        iniciarBanner();
+    });
+    </script>
 
 </body>
 </html>
