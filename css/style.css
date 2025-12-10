@@ -263,4 +263,10 @@ footer {
 .product-card button:hover {
     transform: scale(1.05);
 }
+.footer-container .redes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
 
