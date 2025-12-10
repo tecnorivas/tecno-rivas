@@ -69,14 +69,14 @@
 // Cargar productos desde CSV
 // ---------------------------
 function cargarProductos() {
-    fetch("productos.csv")
+    fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vSI0-L3i2sMLEZ8eXzZ02hzQJYe4eKNYxw_1KHDsPXJeL4fBXvZpkuGEHpuRgiIIULw6kPZ3GCaswP9/pub?gid=0&single=true&output=csv")
     .then(res => res.text())
     .then(csvText => {
         const lines = csvText.trim().split("\n");
         const headers = lines[0].split(",").map(h => h.trim().toLowerCase());
         const productList = document.getElementById("product-list");
         productList.innerHTML = "";
-
+        
         for (let i = 1; i < lines.length; i++) {
             const values = lines[i].split(",");
             if (values.length < headers.length) continue;
@@ -90,7 +90,7 @@ function cargarProductos() {
             card.classList.add("product-card");
 
             card.innerHTML = `
-                <img src="img/${item.imagen}" alt="${item.producto}">
+                <img src="${item.imagen.startsWith('http') ? item.imagen : 'img/' + item.imagen}" alt="${item.producto}">
                 <h3>${item.producto}</h3>
                 <p class="descripcion">${item.descripcion || ""}</p>
                 <p class="precio">C$ ${item.precio || ""}</p>
@@ -99,21 +99,19 @@ function cargarProductos() {
                 </button>
             `;
 
-            // Evento botón
             card.querySelector(".btn-comprar").addEventListener("click", () => {
                 agregarAlCarrito({
                     producto: item.producto,
                     precio: item.precio,
-                    imagen: `img/${item.imagen}`
+                    imagen: item.imagen.startsWith('http') ? item.imagen : `img/${item.imagen}`
                 });
             });
 
             productList.appendChild(card);
         }
     })
-    .catch(err => console.error("Error cargando productos desde CSV:", err));
+    .catch(err => console.error("Error cargando productos desde Google Sheets:", err));
 }
-
 
 // ------------------------------------------
 // Función agregar al carrito con LocalStorage
