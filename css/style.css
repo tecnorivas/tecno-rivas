@@ -263,10 +263,18 @@ footer {
 .product-card button:hover {
     transform: scale(1.05);
 }
-.footer-container .redes {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-}
 
+/* ==== FOOTER RESPONSIVE FIX ==== */
+@media (max-width: 480px) {
+    .footer-container .redes {
+        display: flex;
+        flex-wrap: nowrap; /* 🔥 Ahora siempre estarán en la misma línea */
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .footer-container .redes a {
+        text-align: center;
+        white-space: nowrap; /* evita que el texto se corte */
+    }
+}
