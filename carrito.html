@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="css/style.css">
 
 <style>
-/* --- ESTILOS PROFESIONALES DEL CARRITO --- */
+/* Estilos del carrito */
 .carrito-container { max-width: 900px; margin: 40px auto; background: #fff; padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
 .carrito-titulo { font-size: 28px; margin-bottom: 20px; text-align: center; font-weight: bold; }
 .carrito-item { display: flex; align-items: center; padding: 15px; border-bottom: 1px solid #ddd; }
@@ -104,9 +104,7 @@
 </footer>
 
 <script>
-// ------------------------
-// Banner
-// ------------------------
+/* Banner */
 function iniciarBanner() {
     let slideIndex = 0;
     const slides = document.getElementsByClassName("banner-slide");
@@ -120,9 +118,7 @@ function iniciarBanner() {
     showSlides();
 }
 
-// ------------------------
-// Carrito
-// ------------------------
+/* Carrito */
 function cargarCarrito() {
     let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
     let lista = document.getElementById("carrito-list");
@@ -150,9 +146,7 @@ function eliminarItem(index){
     cargarCarrito();
 }
 
-// ------------------------
-// Enviar pedido
-// ------------------------
+/* Enviar pedido */
 document.getElementById("btn-whatsapp").addEventListener("click",()=>{
     let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
     let entrega = document.getElementById("tipo-entrega").value;
@@ -167,7 +161,7 @@ document.getElementById("btn-whatsapp").addEventListener("click",()=>{
     let productosTexto = carrito.map(p=>`${p.producto} (C$ ${p.precio})`).join(", ");
     let total = document.getElementById("carrito-total").innerText.replace("Total: C$ ","");
 
-    // Rellenar formulario oculto
+    // Rellenar formulario oculto para Google Sheets
     document.getElementById("form-cliente").value = nota;
     document.getElementById("form-nota").value = nota;
     document.getElementById("form-productos").value = productosTexto;
@@ -178,7 +172,7 @@ document.getElementById("btn-whatsapp").addEventListener("click",()=>{
     // Enviar a Google Sheets
     document.getElementById("pedidoForm").submit();
 
-    // Abrir WhatsApp
+    // Enviar a WhatsApp
     let mensaje = "🛒 *Nuevo pedido desde Tecno🥭Rivas:*%0A%0A";
     carrito.forEach(p=>{
         mensaje += `• ${p.producto} - C$ ${p.precio}%0A`;
@@ -189,23 +183,19 @@ document.getElementById("btn-whatsapp").addEventListener("click",()=>{
     mensaje += `%0A%0A*Total:* C$ ${total}`;
 
     const telefono = "50557733013";
-    window.open(`https://wa.me/${telefono}?text=${mensaje}`, "_blank");
+    window.open(`https://wa.me/${telefono}?text=${mensaje}`,"_blank");
 
     localStorage.removeItem("carrito");
 });
 
-// ------------------------
-// Mostrar info de transferencia
-// ------------------------
+/* Mostrar transferencia */
 document.getElementById("tipo-pago").addEventListener("change",()=>{
     const pago = document.getElementById("tipo-pago").value;
     const info = document.getElementById("info-transferencia");
     info.style.display = pago==="Transferencia"?"block":"none";
 });
 
-// ------------------------
-// Menú móvil
-// ------------------------
+/* Menú móvil */
 const menuToggle = document.getElementById("mobile-menu");
 const navbar = document.getElementById("navbar");
 const header = document.querySelector("header");
@@ -214,12 +204,9 @@ menuToggle.addEventListener("click",()=>{
     header.classList.toggle("menu-abierto");
 });
 
-// ------------------------
-// Inicializar
-// ------------------------
+/* Inicializar */
 cargarCarrito();
 iniciarBanner();
 </script>
-
 </body>
 </html>
