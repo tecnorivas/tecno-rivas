@@ -4,26 +4,27 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tecno🥭Rivas | Carrito</title>
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link rel="stylesheet" href="css/style.css">
 
 <style>
-/* Estilos del carrito */
-.carrito-container { max-width:900px; margin:40px auto; background:#fff; padding:25px; border-radius:15px; box-shadow:0 5px 15px rgba(0,0,0,0.1); }
-.carrito-titulo { font-size:28px; margin-bottom:20px; text-align:center; font-weight:bold; }
-.carrito-item { display:flex; align-items:center; padding:15px; border-bottom:1px solid #ddd; }
-.carrito-item img { width:80px; height:80px; object-fit:contain; margin-right:20px; background:#f4f4f4; padding:5px; border-radius:10px; }
-.carrito-info { flex:1; }
-.carrito-info h3 { margin:0; font-size:18px; }
-.carrito-info p { margin:5px 0; color:#555; }
-.btn-eliminar { background:#ff4b4b; color:#fff; border:none; padding:10px 15px; border-radius:8px; cursor:pointer; }
-.carrito-total { margin-top:25px; font-size:22px; text-align:right; font-weight:bold; }
-.opciones { margin-top:30px; }
-.opciones select { width:100%; padding:12px; font-size:16px; border-radius:10px; margin-bottom:20px; border:1px solid #ccc; }
-#nota-pedido { width:100%; height:120px; padding:12px; margin-top:10px; border-radius:10px; font-size:16px; border:1px solid #ccc; resize:none; }
-.btn-whatsapp { display:block; width:100%; background:#25d366; color:#fff; padding:15px; font-size:18px; text-align:center; border-radius:10px; text-decoration:none; font-weight:bold; margin-top:20px; }
-.btn-whatsapp i { margin-right:8px; }
-@media(max-width:600px){ .carrito-item{ flex-direction:column; text-align:center; } .carrito-item img{ margin-bottom:10px; } }
+/* --- ESTILOS DEL CARRITO --- */
+.carrito-container { max-width: 900px; margin: 40px auto; background: #fff; padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+.carrito-titulo { font-size: 28px; margin-bottom: 20px; text-align: center; font-weight: bold; }
+.carrito-item { display: flex; align-items: center; padding: 15px; border-bottom: 1px solid #ddd; }
+.carrito-item img { width: 80px; height: 80px; object-fit: contain; margin-right: 20px; background: #f4f4f4; padding: 5px; border-radius: 10px; }
+.carrito-info { flex: 1; }
+.carrito-info h3 { margin: 0; font-size: 18px; }
+.carrito-info p { margin: 5px 0; color: #555; }
+.btn-eliminar { background: #ff4b4b; color: #fff; border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer; }
+.carrito-total { margin-top: 25px; font-size: 22px; text-align: right; font-weight: bold; }
+.opciones { margin-top: 30px; }
+.opciones select { width: 100%; padding: 12px; font-size: 16px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #ccc; }
+#nota-pedido { width: 100%; height: 120px; padding: 12px; margin-top: 10px; border-radius: 10px; font-size: 16px; border: 1px solid #ccc; resize: none; }
+.btn-whatsapp { display: block; width: 100%; background: #25d366; color: #fff; padding: 15px; font-size: 18px; text-align: center; border-radius: 10px; text-decoration: none; font-weight: bold; margin-top: 20px; }
+.btn-whatsapp i { margin-right: 8px; }
+@media (max-width: 600px) { .carrito-item { flex-direction: column; text-align: center; } .carrito-item img { margin-bottom: 10px; } }
 </style>
 </head>
 <body>
@@ -41,6 +42,14 @@
     <div class="menu-toggle" id="mobile-menu">MENU <i class="fa-solid fa-bars"></i></div>
 </div>
 </header>
+
+<div class="banner-container">
+    <img class="banner-slide" src="img/banner1.jpg" alt="">
+    <img class="banner-slide" src="img/banner2.jpg" alt="">
+    <img class="banner-slide" src="img/banner3.jpg" alt="">
+    <img class="banner-slide" src="img/banner4.jpg" alt="">
+    <img class="banner-slide" src="img/banner5.jpg" alt="">
+</div>
 
 <div class="carrito-container">
     <h2 class="carrito-titulo">🛒 Tu Carrito</h2>
@@ -70,7 +79,7 @@
         <textarea id="nota-pedido" placeholder="Escriba su nombre y cualquier nota adicional para su pedido..."></textarea>
     </div>
 
-    <!-- Formulario oculto para enviar a Google Sheets -->
+    <!-- Formulario oculto para Google Sheets -->
     <form id="pedidoForm" action="https://script.google.com/macros/s/AKfycbwlSFNIi1y53GydHvSziDHcON7XEzgHLNzaKHs07c62Kyuk_2kDj2WtvoSZJOi3wYAmVQ/exec" method="POST" target="_blank" style="display:none;">
         <input type="hidden" name="cliente" id="form-cliente">
         <input type="hidden" name="nota" id="form-nota">
@@ -78,7 +87,6 @@
         <input type="hidden" name="total" id="form-total">
         <input type="hidden" name="entrega" id="form-entrega">
         <input type="hidden" name="pago" id="form-pago">
-        <button type="submit">Enviar</button>
     </form>
 
     <a id="btn-whatsapp" class="btn-whatsapp" href="#"><i class="fa-brands fa-whatsapp"></i> Enviar pedido</a>
@@ -135,12 +143,12 @@ function eliminarItem(index){
     cargarCarrito();
 }
 
-// Botón enviar pedido
 document.getElementById("btn-whatsapp").addEventListener("click",()=>{
     let carrito=JSON.parse(localStorage.getItem("carrito"))||[];
     let entrega=document.getElementById("tipo-entrega").value;
     let pago=document.getElementById("tipo-pago").value;
     let nota=document.getElementById("nota-pedido").value.trim();
+
     if(carrito.length===0) return alert("El carrito está vacío");
     if(!entrega) return alert("Selecciona el tipo de entrega");
     if(!pago) return alert("Selecciona el método de pago");
@@ -162,9 +170,7 @@ document.getElementById("btn-whatsapp").addEventListener("click",()=>{
 
     // Enviar a WhatsApp
     let mensaje="🛒 *Nuevo pedido desde Tecno🥭Rivas:*%0A%0A";
-    carrito.forEach(p=>{
-        mensaje+=`• ${p.producto} - C$ ${p.precio}%0A`;
-    });
+    carrito.forEach(p=>{mensaje+=`• ${p.producto} - C$ ${p.precio}%0A`;});
     mensaje+=`%0A*Entrega:* ${entrega}`;
     mensaje+=`%0A*Pago:* ${pago}`;
     mensaje+=`%0A*Cliente:* ${nota}`;
@@ -173,7 +179,6 @@ document.getElementById("btn-whatsapp").addEventListener("click",()=>{
     const telefono="50557733013";
     window.open(`https://wa.me/${telefono}?text=${mensaje}`,"_blank");
 
-    // Limpiar carrito
     localStorage.removeItem("carrito");
 });
 
@@ -186,10 +191,7 @@ document.getElementById("tipo-pago").addEventListener("change",()=>{
 const menuToggle=document.getElementById("mobile-menu");
 const navbar=document.getElementById("navbar");
 const header=document.querySelector("header");
-menuToggle.addEventListener("click",()=>{
-    navbar.classList.toggle("active");
-    header.classList.toggle("menu-abierto");
-});
+menuToggle.addEventListener("click",()=>{navbar.classList.toggle("active");header.classList.toggle("menu-abierto");});
 
 cargarCarrito();
 iniciarBanner();
