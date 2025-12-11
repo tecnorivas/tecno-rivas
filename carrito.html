@@ -290,54 +290,58 @@
         // ejemplo: https://script.google.com/macros/s/AKfycbxxxx/exec
 
         document.getElementById("btn-whatsapp").addEventListener("click", async () => {
-            let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-            let entrega = document.getElementById("tipo-entrega").value;
-            let pago = document.getElementById("tipo-pago").value;
-            let nota = document.getElementById("nota-pedido").value.trim();
+    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    let entrega = document.getElementById("tipo-entrega").value;
+    let pago = document.getElementById("tipo-pago").value;
+    let nota = document.getElementById("nota-pedido").value.trim();
 
-            if (carrito.length === 0) return alert("El carrito está vacío");
-            if (!entrega) return alert("Selecciona el tipo de entrega");
-            if (!pago) return alert("Selecciona el método de pago");
-            if (!nota || nota.length < 3) {
-                return alert("Por favor escriba su nombre y alguna nota adicional.");
-            }
+    if (carrito.length === 0) return alert("El carrito está vacío");
+    if (!entrega) return alert("Selecciona el tipo de entrega");
+    if (!pago) return alert("Selecciona el método de pago");
+    if (!nota || nota.length < 3) return alert("Por favor escriba su nombre y alguna nota adicional.");
 
-            let productosTexto = carrito.map(p => `${p.producto} (C$ ${p.precio})`).join(", ");
-            let total = document.getElementById("carrito-total").innerText.replace("Total: C$ ", "");
+    let productosTexto = carrito.map(p => `${p.producto} (C$ ${p.precio})`).join(", ");
+    let total = document.getElementById("carrito-total").innerText.replace("Total: C$ ", "");
 
-            // ENVIAR A GOOGLE SHEETS
-            fetch(API_URL, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    cliente: nota,
-                    productos: productosTexto,
-                    total: total,
-                    entrega: entrega,
-                    pago: pago,
-                    nota: nota
-                })
-            });
-
-            // ENVIAR A WhatsApp
-            let mensaje = "🛒 *Nuevo pedido desde Tecno🥭Rivas:*%0A%0A";
-
-            carrito.forEach(p => {
-                mensaje += `• ${p.producto} - C$ ${p.precio}%0A`;
-            });
-
-            mensaje += `%0A*Entrega:* ${entrega}`;
-            mensaje += `%0A*Pago:* ${pago}`;
-            mensaje += `%0A*Cliente:* ${nota}`;
-            mensaje += `%0A%0A*Total:* C$ ${total}`;
-
-            const telefono = "50557733013";
-            const url = `https://wa.me/${telefono}?text=${mensaje}`;
-
-            localStorage.removeItem("carrito");
-
-            window.location.href = url;
+    try {
+        // 1️⃣ Enviar a Google Sheets
+        const response = await fetch(API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                cliente: nota,
+                productos: productosTexto,
+                total: total,
+                entrega: entrega,
+                pago: pago,
+                nota: nota
+            })
         });
+
+        if (!response.ok) throw new Error("No se pudo enviar el pedido a Google Sheets");
+
+        // 2️⃣ Preparar mensaje de WhatsApp
+        let mensaje = "🛒 *Nuevo pedido desde Tecno🥭Rivas:*%0A%0A";
+        carrito.forEach(p => {
+            mensaje += `• ${p.producto} - C$ ${p.precio}%0A`;
+        });
+        mensaje += `%0A*Entrega:* ${entrega}`;
+        mensaje += `%0A*Pago:* ${pago}`;
+        mensaje += `%0A*Cliente:* ${nota}`;
+        mensaje += `%0A%0A*Total:* C$ ${total}`;
+
+        const telefono = "50557733013";
+        const url = `https://wa.me/${telefono}?text=${mensaje}`;
+
+        // 3️⃣ Limpiar carrito y redirigir a WhatsApp
+        localStorage.removeItem("carrito");
+        window.location.href = url;
+
+    } catch (error) {
+        console.error(error);
+        alert("Ocurrió un error al enviar el pedido. Intente nuevamente.");
+    }
+});
 
         /* -----------------------
            Mostrar datos de transferencia
