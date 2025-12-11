@@ -104,7 +104,9 @@
 </footer>
 
 <script>
-/* Banner */
+// ------------------------
+// Banner
+// ------------------------
 function iniciarBanner() {
     let slideIndex = 0;
     const slides = document.getElementsByClassName("banner-slide");
@@ -118,7 +120,9 @@ function iniciarBanner() {
     showSlides();
 }
 
-/* Carrito */
+// ------------------------
+// Carrito
+// ------------------------
 function cargarCarrito() {
     let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
     let lista = document.getElementById("carrito-list");
@@ -146,7 +150,9 @@ function eliminarItem(index){
     cargarCarrito();
 }
 
-/* Enviar pedido */
+// ------------------------
+// Enviar pedido
+// ------------------------
 document.getElementById("btn-whatsapp").addEventListener("click",()=>{
     let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
     let entrega = document.getElementById("tipo-entrega").value;
@@ -172,7 +178,7 @@ document.getElementById("btn-whatsapp").addEventListener("click",()=>{
     // Enviar a Google Sheets
     document.getElementById("pedidoForm").submit();
 
-    // Enviar a WhatsApp
+    // Abrir WhatsApp
     let mensaje = "🛒 *Nuevo pedido desde Tecno🥭Rivas:*%0A%0A";
     carrito.forEach(p=>{
         mensaje += `• ${p.producto} - C$ ${p.precio}%0A`;
@@ -183,19 +189,23 @@ document.getElementById("btn-whatsapp").addEventListener("click",()=>{
     mensaje += `%0A%0A*Total:* C$ ${total}`;
 
     const telefono = "50557733013";
-    window.open(`https://wa.me/${telefono}?text=${mensaje}`,"_blank");
+    window.open(`https://wa.me/${telefono}?text=${mensaje}`, "_blank");
 
     localStorage.removeItem("carrito");
 });
 
-/* Mostrar transferencia */
+// ------------------------
+// Mostrar info de transferencia
+// ------------------------
 document.getElementById("tipo-pago").addEventListener("change",()=>{
     const pago = document.getElementById("tipo-pago").value;
     const info = document.getElementById("info-transferencia");
     info.style.display = pago==="Transferencia"?"block":"none";
 });
 
-/* Menú móvil */
+// ------------------------
+// Menú móvil
+// ------------------------
 const menuToggle = document.getElementById("mobile-menu");
 const navbar = document.getElementById("navbar");
 const header = document.querySelector("header");
@@ -204,9 +214,12 @@ menuToggle.addEventListener("click",()=>{
     header.classList.toggle("menu-abierto");
 });
 
-/* Inicializar */
+// ------------------------
+// Inicializar
+// ------------------------
 cargarCarrito();
 iniciarBanner();
 </script>
+
 </body>
 </html>
