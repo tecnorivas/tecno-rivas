@@ -104,7 +104,7 @@
 </footer>
 
 <script>
-/* Banner */
+/* --- Banner --- */
 function iniciarBanner() {
     let slideIndex = 0;
     const slides = document.getElementsByClassName("banner-slide");
@@ -118,7 +118,7 @@ function iniciarBanner() {
     showSlides();
 }
 
-/* Carrito */
+/* --- Carrito --- */
 function cargarCarrito() {
     let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
     let lista = document.getElementById("carrito-list");
@@ -146,65 +146,81 @@ function eliminarItem(index){
     cargarCarrito();
 }
 
-/* Enviar pedido */
-document.getElementById("btn-whatsapp").addEventListener("click",()=>{
+/* --- Enviar pedido a Sheets y WhatsApp --- */
+const API_URL = "https://script.google.com/macros/s/AKfycbwlSFNIi1y53GydHvSziDHcON7XEzgHLNzaKHs07c62Kyuk_2kDj2WtvoSZJOi3wYAmVQ/exec";
+
+document.getElementById("btn-whatsapp").addEventListener("click", async () => {
     let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
     let entrega = document.getElementById("tipo-entrega").value;
     let pago = document.getElementById("tipo-pago").value;
     let nota = document.getElementById("nota-pedido").value.trim();
 
-    if(carrito.length===0) return alert("El carrito está vacío");
+    if(carrito.length === 0) return alert("El carrito está vacío");
     if(!entrega) return alert("Selecciona el tipo de entrega");
     if(!pago) return alert("Selecciona el método de pago");
-    if(!nota || nota.length<3) return alert("Escriba su nombre y alguna nota adicional.");
+    if(!nota || nota.length < 3) return alert("Escriba su nombre y alguna nota adicional.");
 
-    let productosTexto = carrito.map(p=>`${p.producto} (C$ ${p.precio})`).join(", ");
+    let productosTexto = carrito.map(p => `${p.producto} (C$ ${p.precio})`).join(", ");
     let total = document.getElementById("carrito-total").innerText.replace("Total: C$ ","");
 
-    // Rellenar formulario oculto para Google Sheets
-    document.getElementById("form-cliente").value = nota;
-    document.getElementById("form-nota").value = nota;
-    document.getElementById("form-productos").value = productosTexto;
-    document.getElementById("form-total").value = total;
-    document.getElementById("form-entrega").value = entrega;
-    document.getElementById("form-pago").value = pago;
+    try {
+        // Crear FormData y enviarlo con fetch
+        const formData = new FormData();
+        formData.append("cliente", nota);
+        formData.append("nota", nota);
+        formData.append("productos", productosTexto);
+        formData.append("total", total);
+        formData.append("entrega", entrega);
+        formData.append("pago", pago);
 
-    // Enviar a Google Sheets
-    document.getElementById("pedidoForm").submit();
+        const response = await fetch(API_URL, {
+            method: "POST",
+            body: formData
+        });
 
-    // Enviar a WhatsApp
-    let mensaje = "🛒 *Nuevo pedido desde Tecno🥭Rivas:*%0A%0A";
-    carrito.forEach(p=>{
-        mensaje += `• ${p.producto} - C$ ${p.precio}%0A`;
-    });
-    mensaje += `%0A*Entrega:* ${entrega}`;
-    mensaje += `%0A*Pago:* ${pago}`;
-    mensaje += `%0A*Cliente:* ${nota}`;
-    mensaje += `%0A%0A*Total:* C$ ${total}`;
+        const text = await response.text();
+        console.log("Respuesta Google Sheets:", text);
 
-    const telefono = "50557733013";
-    window.open(`https://wa.me/${telefono}?text=${mensaje}`,"_blank");
+        // Enviar a WhatsApp
+        let mensaje = "🛒 *Nuevo pedido desde Tecno🥭Rivas:*%0A%0A";
+        carrito.forEach(p => {
+            mensaje += `• ${p.producto} - C$ ${p.precio}%0A`;
+        });
+        mensaje += `%0A*Entrega:* ${entrega}`;
+        mensaje += `%0A*Pago:* ${pago}`;
+        mensaje += `%0A*Cliente:* ${nota}`;
+        mensaje += `%0A%0A*Total:* C$ ${total}`;
 
-    localStorage.removeItem("carrito");
+        const telefono = "50557733013";
+        window.open(`https://wa.me/${telefono}?text=${mensaje}`, "_blank");
+
+        // Limpiar carrito
+        localStorage.removeItem("carrito");
+        cargarCarrito();
+
+    } catch (error) {
+        console.error(error);
+        alert("Ocurrió un error al enviar el pedido. Intente nuevamente.");
+    }
 });
 
-/* Mostrar transferencia */
-document.getElementById("tipo-pago").addEventListener("change",()=>{
+/* --- Mostrar transferencia --- */
+document.getElementById("tipo-pago").addEventListener("change", () => {
     const pago = document.getElementById("tipo-pago").value;
     const info = document.getElementById("info-transferencia");
-    info.style.display = pago==="Transferencia"?"block":"none";
+    info.style.display = pago === "Transferencia" ? "block" : "none";
 });
 
-/* Menú móvil */
+/* --- Menú móvil --- */
 const menuToggle = document.getElementById("mobile-menu");
 const navbar = document.getElementById("navbar");
 const header = document.querySelector("header");
-menuToggle.addEventListener("click",()=>{
+menuToggle.addEventListener("click", () => {
     navbar.classList.toggle("active");
     header.classList.toggle("menu-abierto");
 });
 
-/* Inicializar */
+/* --- Inicializar --- */
 cargarCarrito();
 iniciarBanner();
 </script>
