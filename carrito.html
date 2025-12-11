@@ -130,7 +130,7 @@
 </head>
 <body>
 
-    <!-- Encabezado (MENÚ) -->
+    <!-- Encabezado (MENU) -->
     <header>
         <div class="container-header">
             <h1 class="logo">Tecno🥭Rivas</h1>
@@ -144,7 +144,7 @@
             <div class="menu-toggle" id="mobile-menu">MENU <i class="fa-solid fa-bars"></i></div>
         </div>
     </header>
-	
+
     <!-- BANNER -->
     <div class="banner-container">
         <img class="banner-slide" src="img/banner1.jpg" alt="">
@@ -153,7 +153,7 @@
         <img class="banner-slide" src="img/banner4.jpg" alt="">
         <img class="banner-slide" src="img/banner5.jpg" alt="">
     </div>
-	
+
     <!-- CONTENIDO PRINCIPAL -->
     <div class="carrito-container">
 
@@ -175,31 +175,30 @@
                 <option value="Efectivo">Efectivo</option>
                 <option value="Transferencia">Transferencia</option>
             </select>
-			
-			<!-- Info de transferencia (oculto por defecto) -->
-<div id="info-transferencia" style="
-    display:none;
-    margin-top:15px;
-    background:#f7f7f7;
-    padding:15px;
-    border-radius:10px;
-    border:1px solid #ccc;
-">
-    <h3 style="margin-top:0;">📲 Datos para transferencia</h3>
 
-    <p><strong>Banco BAC (cordobas):</strong><br>
-    Número de cuenta: <strong>370097586</strong><br>
-    A nombre de: <strong>Amadeo Antonio Espinoza Alvarado</strong></p>
+            <!-- Info de transferencia (oculto por defecto) -->
+            <div id="info-transferencia" style="
+                display:none;
+                margin-top:15px;
+                background:#f7f7f7;
+                padding:15px;
+                border-radius:10px;
+                border:1px solid #ccc;
+            ">
+                <h3 style="margin-top:0;">📲 Datos para transferencia</h3>
 
-    <p><strong>Banco BAC (dolar):</strong><br>
-    Número de cuenta: <strong>370097644</strong><br>
-    A nombre de: <strong>Amadeo Antonio Espinoza Alvarado</strong></p>
+                <p><strong>Banco BAC (cordobas):</strong><br>
+                Número de cuenta: <strong>370097586</strong><br>
+                A nombre de: <strong>Amadeo Antonio Espinoza Alvarado</strong></p>
 
-    <p style="color:#444; margin-top:10px;">
-        ✔ Después de transferir, envía la captura del comprobante por WhatsApp.
-    </p>
-</div>
+                <p><strong>Banco BAC (dolar):</strong><br>
+                Número de cuenta: <strong>370097644</strong><br>
+                A nombre de: <strong>Amadeo Antonio Espinoza Alvarado</strong></p>
 
+                <p style="color:#444; margin-top:10px;">
+                    ✔ Después de transferir, envía la captura del comprobante por WhatsApp.
+                </p>
+            </div>
 
             <!-- Campo de nota -->
             <textarea id="nota-pedido" placeholder="Escriba su nombre y cualquier nota adicional para su pedido..."></textarea>
@@ -227,9 +226,10 @@
     </footer>
 
     <script>
-        // -----------------------
-        // Animación del banner
-        // -----------------------
+
+        /* -----------------------
+           Animación del banner
+        ------------------------ */
         function iniciarBanner() {
             let slideIndex = 0;
             const slides = document.getElementsByClassName("banner-slide");
@@ -247,7 +247,9 @@
             showSlides();
         }
 
-        // Cargar carrito
+        /* -----------------------
+           Cargar carrito
+        ------------------------ */
         function cargarCarrito() {
             let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
             let lista = document.getElementById("carrito-list");
@@ -280,21 +282,44 @@
             cargarCarrito();
         }
 
-        // Enviar WhatsApp
-        document.getElementById("btn-whatsapp").addEventListener("click", () => {
+        /* -----------------------
+           ENVÍO A WHATSAPP + GOOGLE SHEETS
+        ------------------------ */
+
+        const API_URL = "https://script.google.com/macros/s/AKfycbwlSFNIi1y53GydHvSziDHcON7XEzgHLNzaKHs07c62Kyuk_2kDj2WtvoSZJOi3wYAmVQ/exec"; 
+        // ejemplo: https://script.google.com/macros/s/AKfycbxxxx/exec
+
+        document.getElementById("btn-whatsapp").addEventListener("click", async () => {
             let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
             let entrega = document.getElementById("tipo-entrega").value;
             let pago = document.getElementById("tipo-pago").value;
             let nota = document.getElementById("nota-pedido").value.trim();
 
             if (carrito.length === 0) return alert("El carrito está vacío");
-if (!entrega) return alert("Selecciona el tipo de entrega");
-if (!pago) return alert("Selecciona el método de pago");
+            if (!entrega) return alert("Selecciona el tipo de entrega");
+            if (!pago) return alert("Selecciona el método de pago");
+            if (!nota || nota.length < 3) {
+                return alert("Por favor escriba su nombre y alguna nota adicional.");
+            }
 
-if (!nota || nota.length < 3) {
-    return alert("Por favor escriba su nombre y alguna nota adicional para su pedido.");
-}
+            let productosTexto = carrito.map(p => `${p.producto} (C$ ${p.precio})`).join(", ");
+            let total = document.getElementById("carrito-total").innerText.replace("Total: C$ ", "");
 
+            // ENVIAR A GOOGLE SHEETS
+            fetch(API_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    cliente: nota,
+                    productos: productosTexto,
+                    total: total,
+                    entrega: entrega,
+                    pago: pago,
+                    nota: nota
+                })
+            });
+
+            // ENVIAR A WhatsApp
             let mensaje = "🛒 *Nuevo pedido desde Tecno🥭Rivas:*%0A%0A";
 
             carrito.forEach(p => {
@@ -303,12 +328,8 @@ if (!nota || nota.length < 3) {
 
             mensaje += `%0A*Entrega:* ${entrega}`;
             mensaje += `%0A*Pago:* ${pago}`;
-
-            if (nota !== "") {
-                mensaje += `%0A*Nombre y nota adicional:* ${nota}`;
-            }
-
-            mensaje += `%0A%0A*Total:* C$ ${document.getElementById("carrito-total").innerText.replace("Total: C$ ", "")}`;
+            mensaje += `%0A*Cliente:* ${nota}`;
+            mensaje += `%0A%0A*Total:* C$ ${total}`;
 
             const telefono = "50557733013";
             const url = `https://wa.me/${telefono}?text=${mensaje}`;
@@ -317,8 +338,24 @@ if (!nota || nota.length < 3) {
 
             window.location.href = url;
         });
-		
-// Menú móvil
+
+        /* -----------------------
+           Mostrar datos de transferencia
+        ------------------------ */
+        document.getElementById("tipo-pago").addEventListener("change", () => {
+            const pago = document.getElementById("tipo-pago").value;
+            const info = document.getElementById("info-transferencia");
+
+            if (pago === "Transferencia") {
+                info.style.display = "block";
+            } else {
+                info.style.display = "none";
+            }
+        });
+
+        /* -----------------------
+           MENÚ MÓVIL
+        ------------------------ */
         const menuToggle = document.getElementById("mobile-menu");
         const navbar = document.getElementById("navbar");
         const header = document.querySelector("header");
@@ -327,21 +364,13 @@ if (!nota || nota.length < 3) {
             navbar.classList.toggle("active");
             header.classList.toggle("menu-abierto");
         });
-		
-		document.getElementById("tipo-pago").addEventListener("change", () => {
-    const pago = document.getElementById("tipo-pago").value;
-    const info = document.getElementById("info-transferencia");
 
-    if (pago === "Transferencia") {
-        info.style.display = "block";
-    } else {
-        info.style.display = "none";
-    }
-});
-		
-        // Inicializar
+        /* -----------------------
+           Inicializar
+        ------------------------ */
         cargarCarrito();
         iniciarBanner();
+
     </script>
 
 </body>
