@@ -1,381 +1,207 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tecno🥭Rivas | Carrito</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tecno🥭Rivas | Carrito</title>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="css/style.css">
 
-    <style>
-        /* --- ESTILOS PROFESIONALES DEL CARRITO --- */
-        .carrito-container {
-            max-width: 900px;
-            margin: 40px auto;
-            background: #fff;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .carrito-titulo {
-            font-size: 28px;
-            margin-bottom: 20px;
-            text-align: center;
-            font-weight: bold;
-        }
-
-        .carrito-item {
-            display: flex;
-            align-items: center;
-            padding: 15px;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .carrito-item img {
-            width: 80px;
-            height: 80px;
-            object-fit: contain;
-            margin-right: 20px;
-            background: #f4f4f4;
-            padding: 5px;
-            border-radius: 10px;
-        }
-
-        .carrito-info {
-            flex: 1;
-        }
-
-        .carrito-info h3 {
-            margin: 0;
-            font-size: 18px;
-        }
-
-        .carrito-info p {
-            margin: 5px 0;
-            color: #555;
-        }
-
-        .btn-eliminar {
-            background: #ff4b4b;
-            color: #fff;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        .carrito-total {
-            margin-top: 25px;
-            font-size: 22px;
-            text-align: right;
-            font-weight: bold;
-        }
-
-        .opciones {
-            margin-top: 30px;
-        }
-
-        .opciones select {
-            width: 100%;
-            padding: 12px;
-            font-size: 16px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-        }
-
-        /* Campo de nota */
-        #nota-pedido {
-            width: 100%;
-            height: 120px;
-            padding: 12px;
-            margin-top: 10px;
-            border-radius: 10px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            resize: none;
-        }
-
-        .btn-whatsapp {
-            display: block;
-            width: 100%;
-            background: #25d366;
-            color: #fff;
-            padding: 15px;
-            font-size: 18px;
-            text-align: center;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: bold;
-            margin-top: 20px;
-        }
-
-        .btn-whatsapp i {
-            margin-right: 8px;
-        }
-
-        /* Responsive */
-        @media (max-width: 600px) {
-            .carrito-item {
-                flex-direction: column;
-                text-align: center;
-            }
-            .carrito-item img {
-                margin-bottom: 10px;
-            }
-        }
-    </style>
+<style>
+/* --- ESTILOS PROFESIONALES DEL CARRITO --- */
+.carrito-container { max-width: 900px; margin: 40px auto; background: #fff; padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+.carrito-titulo { font-size: 28px; margin-bottom: 20px; text-align: center; font-weight: bold; }
+.carrito-item { display: flex; align-items: center; padding: 15px; border-bottom: 1px solid #ddd; }
+.carrito-item img { width: 80px; height: 80px; object-fit: contain; margin-right: 20px; background: #f4f4f4; padding: 5px; border-radius: 10px; }
+.carrito-info { flex: 1; }
+.carrito-info h3 { margin: 0; font-size: 18px; }
+.carrito-info p { margin: 5px 0; color: #555; }
+.btn-eliminar { background: #ff4b4b; color: #fff; border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer; }
+.carrito-total { margin-top: 25px; font-size: 22px; text-align: right; font-weight: bold; }
+.opciones { margin-top: 30px; }
+.opciones select { width: 100%; padding: 12px; font-size: 16px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #ccc; }
+#nota-pedido { width: 100%; height: 120px; padding: 12px; margin-top: 10px; border-radius: 10px; font-size: 16px; border: 1px solid #ccc; resize: none; }
+.btn-whatsapp { display: block; width: 100%; background: #25d366; color: #fff; padding: 15px; font-size: 18px; text-align: center; border-radius: 10px; text-decoration: none; font-weight: bold; margin-top: 20px; }
+.btn-whatsapp i { margin-right: 8px; }
+@media (max-width: 600px) { .carrito-item { flex-direction: column; text-align: center; } .carrito-item img { margin-bottom: 10px; } }
+</style>
 </head>
 <body>
 
-    <!-- Encabezado (MENU) -->
-    <header>
-        <div class="container-header">
-            <h1 class="logo">Tecno🥭Rivas</h1>
-            <nav id="navbar">
-                <a href="index.html"><i class="fa-solid fa-house"></i> Inicio</a>
-                <a href="productos.html"><i class="fa-solid fa-box-open"></i> Productos</a>
-                <a href="servicios.html"><i class="fa-solid fa-print"></i> Servicios</a>
-                <a href="carrito.html"><i class="fa-solid fa-cart-shopping"></i> Carrito</a>
-                <a href="contacto.html"><i class="fa-solid fa-envelope"></i> Contacto</a>
-            </nav>
-            <div class="menu-toggle" id="mobile-menu">MENU <i class="fa-solid fa-bars"></i></div>
-        </div>
-    </header>
+<header>
+<div class="container-header">
+    <h1 class="logo">Tecno🥭Rivas</h1>
+    <nav id="navbar">
+        <a href="index.html"><i class="fa-solid fa-house"></i> Inicio</a>
+        <a href="productos.html"><i class="fa-solid fa-box-open"></i> Productos</a>
+        <a href="servicios.html"><i class="fa-solid fa-print"></i> Servicios</a>
+        <a href="carrito.html"><i class="fa-solid fa-cart-shopping"></i> Carrito</a>
+        <a href="contacto.html"><i class="fa-solid fa-envelope"></i> Contacto</a>
+    </nav>
+    <div class="menu-toggle" id="mobile-menu">MENU <i class="fa-solid fa-bars"></i></div>
+</div>
+</header>
 
-    <!-- BANNER -->
-    <div class="banner-container">
-        <img class="banner-slide" src="img/banner1.jpg" alt="">
-        <img class="banner-slide" src="img/banner2.jpg" alt="">
-        <img class="banner-slide" src="img/banner3.jpg" alt="">
-        <img class="banner-slide" src="img/banner4.jpg" alt="">
-        <img class="banner-slide" src="img/banner5.jpg" alt="">
+<div class="banner-container">
+    <img class="banner-slide" src="img/banner1.jpg" alt="">
+    <img class="banner-slide" src="img/banner2.jpg" alt="">
+    <img class="banner-slide" src="img/banner3.jpg" alt="">
+    <img class="banner-slide" src="img/banner4.jpg" alt="">
+    <img class="banner-slide" src="img/banner5.jpg" alt="">
+</div>
+
+<div class="carrito-container">
+    <h2 class="carrito-titulo">🛒 Tu Carrito</h2>
+    <div id="carrito-list"></div>
+    <p id="carrito-total" class="carrito-total">Total: C$ 0</p>
+
+    <div class="opciones">
+        <select id="tipo-entrega">
+            <option value="">Seleccione tipo de entrega</option>
+            <option value="Presencial">Entrega presencial</option>
+            <option value="Delivery">Delivery</option>
+        </select>
+
+        <select id="tipo-pago">
+            <option value="">Seleccione método de pago</option>
+            <option value="Efectivo">Efectivo</option>
+            <option value="Transferencia">Transferencia</option>
+        </select>
+
+        <div id="info-transferencia" style="display:none; margin-top:15px; background:#f7f7f7; padding:15px; border-radius:10px; border:1px solid #ccc;">
+            <h3 style="margin-top:0;">📲 Datos para transferencia</h3>
+            <p><strong>Banco BAC (cordobas):</strong><br>Número de cuenta: <strong>370097586</strong><br>A nombre de: <strong>Amadeo Antonio Espinoza Alvarado</strong></p>
+            <p><strong>Banco BAC (dolar):</strong><br>Número de cuenta: <strong>370097644</strong><br>A nombre de: <strong>Amadeo Antonio Espinoza Alvarado</strong></p>
+            <p style="color:#444; margin-top:10px;">✔ Después de transferir, envía la captura del comprobante por WhatsApp.</p>
+        </div>
+
+        <textarea id="nota-pedido" placeholder="Escriba su nombre y cualquier nota adicional para su pedido..."></textarea>
     </div>
 
-    <!-- CONTENIDO PRINCIPAL -->
-    <div class="carrito-container">
+    <!-- Formulario oculto para Google Sheets -->
+    <form id="pedidoForm" action="https://script.google.com/macros/s/AKfycbwlSFNIi1y53GydHvSziDHcON7XEzgHLNzaKHs07c62Kyuk_2kDj2WtvoSZJOi3wYAmVQ/exec" method="POST" target="_blank" style="display:none;">
+        <input type="hidden" name="cliente" id="form-cliente">
+        <input type="hidden" name="nota" id="form-nota">
+        <input type="hidden" name="productos" id="form-productos">
+        <input type="hidden" name="total" id="form-total">
+        <input type="hidden" name="entrega" id="form-entrega">
+        <input type="hidden" name="pago" id="form-pago">
+        <button type="submit">Enviar</button>
+    </form>
 
-        <h2 class="carrito-titulo">🛒 Tu Carrito</h2>
+    <a id="btn-whatsapp" class="btn-whatsapp" href="#"><i class="fa-brands fa-whatsapp"></i> Enviar pedido</a>
+</div>
 
-        <div id="carrito-list"></div>
-
-        <p id="carrito-total" class="carrito-total">Total: C$ 0</p>
-
-        <div class="opciones">
-            <select id="tipo-entrega">
-                <option value="">Seleccione tipo de entrega</option>
-                <option value="Presencial">Entrega presencial</option>
-                <option value="Delivery">Delivery</option>
-            </select>
-
-            <select id="tipo-pago">
-                <option value="">Seleccione método de pago</option>
-                <option value="Efectivo">Efectivo</option>
-                <option value="Transferencia">Transferencia</option>
-            </select>
-
-            <!-- Info de transferencia (oculto por defecto) -->
-            <div id="info-transferencia" style="
-                display:none;
-                margin-top:15px;
-                background:#f7f7f7;
-                padding:15px;
-                border-radius:10px;
-                border:1px solid #ccc;
-            ">
-                <h3 style="margin-top:0;">📲 Datos para transferencia</h3>
-
-                <p><strong>Banco BAC (cordobas):</strong><br>
-                Número de cuenta: <strong>370097586</strong><br>
-                A nombre de: <strong>Amadeo Antonio Espinoza Alvarado</strong></p>
-
-                <p><strong>Banco BAC (dolar):</strong><br>
-                Número de cuenta: <strong>370097644</strong><br>
-                A nombre de: <strong>Amadeo Antonio Espinoza Alvarado</strong></p>
-
-                <p style="color:#444; margin-top:10px;">
-                    ✔ Después de transferir, envía la captura del comprobante por WhatsApp.
-                </p>
-            </div>
-
-            <!-- Campo de nota -->
-            <textarea id="nota-pedido" placeholder="Escriba su nombre y cualquier nota adicional para su pedido..."></textarea>
-        </div>
-
-        <a id="btn-whatsapp" class="btn-whatsapp" href="#">
-            <i class="fa-brands fa-whatsapp"></i> Enviar pedido
-        </a>
-
+<footer>
+<div class="footer-container">
+    <p>&copy; 2025 Tecno🥭Rivas</p>
+    <div class="redes">
+        <a href="https://www.facebook.com/p/Tecno-Rivas-100040930213703/?locale=es_LA" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a>
+        <a href="https://www.instagram.com/tecnorivas2025/" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
     </div>
+</div>
+</footer>
 
-    <!-- PIE DE PÁGINA -->
-    <footer>
-        <div class="footer-container">
-            <p>&copy; 2025 Tecno🥭Rivas</p>
-            <div class="redes">
-                <a href="https://www.facebook.com/p/Tecno-Rivas-100040930213703/?locale=es_LA" target="_blank">
-                    <i class="fab fa-facebook-f"></i> Facebook
-                </a>
-                <a href="https://www.instagram.com/tecnorivas2025/" target="_blank">
-                    <i class="fab fa-instagram"></i> Instagram
-                </a>
+<script>
+function iniciarBanner() {
+    let slideIndex = 0;
+    const slides = document.getElementsByClassName("banner-slide");
+    function showSlides() {
+        for (let i = 0; i < slides.length; i++) slides[i].style.opacity = 0;
+        slideIndex++;
+        if (slideIndex > slides.length) slideIndex = 1;
+        slides[slideIndex - 1].style.opacity = 1;
+        setTimeout(showSlides, 4000);
+    }
+    showSlides();
+}
+
+function cargarCarrito() {
+    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    let lista = document.getElementById("carrito-list");
+    let total = 0;
+    lista.innerHTML = "";
+    carrito.forEach((p,index)=>{
+        total += Number(p.precio);
+        lista.innerHTML += `
+        <div class="carrito-item">
+            <img src="${p.imagen}">
+            <div class="carrito-info">
+                <h3>${p.producto}</h3>
+                <p>Precio: C$ ${p.precio}</p>
             </div>
-        </div>
-    </footer>
+            <button class="btn-eliminar" onclick="eliminarItem(${index})">Eliminar</button>
+        </div>`;
+    });
+    document.getElementById("carrito-total").innerText = `Total: C$ ${total}`;
+}
 
-    <script>
+function eliminarItem(index){
+    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    carrito.splice(index,1);
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+    cargarCarrito();
+}
 
-        /* -----------------------
-           Animación del banner
-        ------------------------ */
-        function iniciarBanner() {
-            let slideIndex = 0;
-            const slides = document.getElementsByClassName("banner-slide");
-
-            function showSlides() {
-                for (let i = 0; i < slides.length; i++) {
-                    slides[i].style.opacity = 0;
-                }
-                slideIndex++;
-                if (slideIndex > slides.length) slideIndex = 1;
-                slides[slideIndex - 1].style.opacity = 1;
-                setTimeout(showSlides, 4000);
-            }
-
-            showSlides();
-        }
-
-        /* -----------------------
-           Cargar carrito
-        ------------------------ */
-        function cargarCarrito() {
-            let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-            let lista = document.getElementById("carrito-list");
-            let total = 0;
-
-            lista.innerHTML = "";
-
-            carrito.forEach((p, index) => {
-                total += Number(p.precio);
-
-                lista.innerHTML += `
-                    <div class="carrito-item">
-                        <img src="${p.imagen}">
-                        <div class="carrito-info">
-                            <h3>${p.producto}</h3>
-                            <p>Precio: C$ ${p.precio}</p>
-                        </div>
-                        <button class="btn-eliminar" onclick="eliminarItem(${index})">Eliminar</button>
-                    </div>
-                `;
-            });
-
-            document.getElementById("carrito-total").innerText = `Total: C$ ${total}`;
-        }
-
-        function eliminarItem(index) {
-            let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-            carrito.splice(index, 1);
-            localStorage.setItem("carrito", JSON.stringify(carrito));
-            cargarCarrito();
-        }
-
-        /* -----------------------
-           ENVÍO A WHATSAPP + GOOGLE SHEETS
-        ------------------------ */
-
-        const API_URL = "https://script.google.com/macros/s/AKfycbwlSFNIi1y53GydHvSziDHcON7XEzgHLNzaKHs07c62Kyuk_2kDj2WtvoSZJOi3wYAmVQ/exec"; 
-        // ejemplo: https://script.google.com/macros/s/AKfycbxxxx/exec
-
-        document.getElementById("btn-whatsapp").addEventListener("click", async () => {
+// Manejo de formulario y WhatsApp
+document.getElementById("btn-whatsapp").addEventListener("click",()=>{
     let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
     let entrega = document.getElementById("tipo-entrega").value;
     let pago = document.getElementById("tipo-pago").value;
     let nota = document.getElementById("nota-pedido").value.trim();
+    if(carrito.length===0) return alert("El carrito está vacío");
+    if(!entrega) return alert("Selecciona el tipo de entrega");
+    if(!pago) return alert("Selecciona el método de pago");
+    if(!nota || nota.length<3) return alert("Por favor escriba su nombre y alguna nota adicional.");
 
-    if (carrito.length === 0) return alert("El carrito está vacío");
-    if (!entrega) return alert("Selecciona el tipo de entrega");
-    if (!pago) return alert("Selecciona el método de pago");
-    if (!nota || nota.length < 3) return alert("Por favor escriba su nombre y alguna nota adicional.");
+    let productosTexto = carrito.map(p=>`${p.producto} (C$ ${p.precio})`).join(", ");
+    let total = document.getElementById("carrito-total").innerText.replace("Total: C$ ","");
 
-    let productosTexto = carrito.map(p => `${p.producto} (C$ ${p.precio})`).join(", ");
-    let total = document.getElementById("carrito-total").innerText.replace("Total: C$ ", "");
+    // Rellenar formulario oculto
+    document.getElementById("form-cliente").value = nota;
+    document.getElementById("form-nota").value = nota;
+    document.getElementById("form-productos").value = productosTexto;
+    document.getElementById("form-total").value = total;
+    document.getElementById("form-entrega").value = entrega;
+    document.getElementById("form-pago").value = pago;
 
-    try {
-        // 1️⃣ Enviar a Google Sheets
-        const response = await fetch(API_URL, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                cliente: nota,
-                productos: productosTexto,
-                total: total,
-                entrega: entrega,
-                pago: pago,
-                nota: nota
-            })
-        });
+    // Enviar a Google Sheets
+    document.getElementById("pedidoForm").submit();
 
-        if (!response.ok) throw new Error("No se pudo enviar el pedido a Google Sheets");
+    // Enviar a WhatsApp
+    let mensaje = "🛒 *Nuevo pedido desde Tecno🥭Rivas:*%0A%0A";
+    carrito.forEach(p=>{
+        mensaje += `• ${p.producto} - C$ ${p.precio}%0A`;
+    });
+    mensaje += `%0A*Entrega:* ${entrega}`;
+    mensaje += `%0A*Pago:* ${pago}`;
+    mensaje += `%0A*Cliente:* ${nota}`;
+    mensaje += `%0A%0A*Total:* C$ ${total}`;
 
-        // 2️⃣ Preparar mensaje de WhatsApp
-        let mensaje = "🛒 *Nuevo pedido desde Tecno🥭Rivas:*%0A%0A";
-        carrito.forEach(p => {
-            mensaje += `• ${p.producto} - C$ ${p.precio}%0A`;
-        });
-        mensaje += `%0A*Entrega:* ${entrega}`;
-        mensaje += `%0A*Pago:* ${pago}`;
-        mensaje += `%0A*Cliente:* ${nota}`;
-        mensaje += `%0A%0A*Total:* C$ ${total}`;
+    const telefono = "50557733013";
+    window.open(`https://wa.me/${telefono}?text=${mensaje}`,"_blank");
 
-        const telefono = "50557733013";
-        const url = `https://wa.me/${telefono}?text=${mensaje}`;
-
-        // 3️⃣ Limpiar carrito y redirigir a WhatsApp
-        localStorage.removeItem("carrito");
-        window.location.href = url;
-
-    } catch (error) {
-        console.error(error);
-        alert("Ocurrió un error al enviar el pedido. Intente nuevamente.");
-    }
+    // Limpiar carrito
+    localStorage.removeItem("carrito");
 });
 
-        /* -----------------------
-           Mostrar datos de transferencia
-        ------------------------ */
-        document.getElementById("tipo-pago").addEventListener("change", () => {
-            const pago = document.getElementById("tipo-pago").value;
-            const info = document.getElementById("info-transferencia");
+document.getElementById("tipo-pago").addEventListener("change",()=>{
+    const pago = document.getElementById("tipo-pago").value;
+    const info = document.getElementById("info-transferencia");
+    info.style.display = pago==="Transferencia"?"block":"none";
+});
 
-            if (pago === "Transferencia") {
-                info.style.display = "block";
-            } else {
-                info.style.display = "none";
-            }
-        });
+const menuToggle = document.getElementById("mobile-menu");
+const navbar = document.getElementById("navbar");
+const header = document.querySelector("header");
+menuToggle.addEventListener("click",()=>{
+    navbar.classList.toggle("active");
+    header.classList.toggle("menu-abierto");
+});
 
-        /* -----------------------
-           MENÚ MÓVIL
-        ------------------------ */
-        const menuToggle = document.getElementById("mobile-menu");
-        const navbar = document.getElementById("navbar");
-        const header = document.querySelector("header");
-
-        menuToggle.addEventListener("click", () => {
-            navbar.classList.toggle("active");
-            header.classList.toggle("menu-abierto");
-        });
-
-        /* -----------------------
-           Inicializar
-        ------------------------ */
-        cargarCarrito();
-        iniciarBanner();
-
-    </script>
-
+cargarCarrito();
+iniciarBanner();
+</script>
 </body>
 </html>
