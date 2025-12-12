@@ -306,9 +306,8 @@
             let total = document.getElementById("carrito-total").innerText.replace("Total: C$ ", "");
 
             // ENVIAR A GOOGLE SHEETS
-         fetch(API_URL, {
+fetch(API_URL, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
         fecha: new Date().toLocaleString("es-NI", { timeZone: "America/Managua" }),
         cliente: nota,
@@ -319,6 +318,7 @@
         pago: pago
     })
 });
+
 
             // ENVIAR A WhatsApp
             let mensaje = "🛒 *Nuevo pedido desde Tecno🥭Rivas:*%0A%0A";
