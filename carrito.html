@@ -314,7 +314,9 @@
         }
 
         let productosTexto = carrito.map(p => `${p.producto} (C$ ${p.precio})`).join(", ");
-        let total = document.getElementById("carrito-total").innerText.replace("Total: C$ ", "");
+        let total = document.getElementById("carrito-total").innerText; // "Total: C$ 1200"
+total = total.replace("Total: ", ""); // "C$ 1200"
+
 
         // ENVIAR A GOOGLE SHEETS
         fetch(API_URL, {
