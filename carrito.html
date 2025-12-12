@@ -225,154 +225,161 @@
         </div>
     </footer>
 
-    <script>
+   <script>
+    /* -----------------------
+       Animación del banner
+    ------------------------ */
+    function iniciarBanner() {
+        let slideIndex = 0;
+        const slides = document.getElementsByClassName("banner-slide");
 
-        /* -----------------------
-           Animación del banner
-        ------------------------ */
-        function iniciarBanner() {
-            let slideIndex = 0;
-            const slides = document.getElementsByClassName("banner-slide");
-
-            function showSlides() {
-                for (let i = 0; i < slides.length; i++) {
-                    slides[i].style.opacity = 0;
-                }
-                slideIndex++;
-                if (slideIndex > slides.length) slideIndex = 1;
-                slides[slideIndex - 1].style.opacity = 1;
-                setTimeout(showSlides, 4000);
+        function showSlides() {
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.opacity = 0;
             }
-
-            showSlides();
+            slideIndex++;
+            if (slideIndex > slides.length) slideIndex = 1;
+            slides[slideIndex - 1].style.opacity = 1;
+            setTimeout(showSlides, 4000);
         }
 
-        /* -----------------------
-           Cargar carrito
-        ------------------------ */
-        function cargarCarrito() {
-            let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-            let lista = document.getElementById("carrito-list");
-            let total = 0;
+        showSlides();
+    }
 
-            lista.innerHTML = "";
+    /* -----------------------
+       Cargar carrito
+    ------------------------ */
+    function cargarCarrito() {
+        let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+        let lista = document.getElementById("carrito-list");
+        let total = 0;
 
-            carrito.forEach((p, index) => {
-                total += Number(p.precio);
+        lista.innerHTML = "";
 
-                lista.innerHTML += `
-                    <div class="carrito-item">
-                        <img src="${p.imagen}">
-                        <div class="carrito-info">
-                            <h3>${p.producto}</h3>
-                            <p>Precio: C$ ${p.precio}</p>
-                        </div>
-                        <button class="btn-eliminar" onclick="eliminarItem(${index})">Eliminar</button>
+        carrito.forEach((p, index) => {
+            total += Number(p.precio);
+
+            lista.innerHTML += `
+                <div class="carrito-item">
+                    <img src="${p.imagen}">
+                    <div class="carrito-info">
+                        <h3>${p.producto}</h3>
+                        <p>Precio: C$ ${p.precio}</p>
                     </div>
-                `;
-            });
-
-            document.getElementById("carrito-total").innerText = `Total: C$ ${total}`;
-        }
-
-        function eliminarItem(index) {
-            let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-            carrito.splice(index, 1);
-            localStorage.setItem("carrito", JSON.stringify(carrito));
-            cargarCarrito();
-        }
-
-        /* -----------------------
-           ENVÍO A WHATSAPP + GOOGLE SHEETS
-        ------------------------ */
-
-        const API_URL = "https://script.google.com/macros/s/AKfycbz8rdQikVXimdv-FFzOyhxC_6dThU29HetqISVXL0W1uq6_XoCeMVCF4Gz8Zl1BgFXdlA/exec"; 
-        // ejemplo: https://script.google.com/macros/s/AKfycbxxxx/exec
-
-        document.getElementById("btn-whatsapp").addEventListener("click", async () => {
-            let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-            let entrega = document.getElementById("tipo-entrega").value;
-            let pago = document.getElementById("tipo-pago").value;
-            let nota = document.getElementById("nota-pedido").value.trim();
-
-            if (carrito.length === 0) return alert("El carrito está vacío");
-            if (!entrega) return alert("Selecciona el tipo de entrega");
-            if (!pago) return alert("Selecciona el método de pago");
-            if (!nota || nota.length < 3) {
-                return alert("Por favor escriba su nombre y alguna nota adicional.");
-            }
-
-            let productosTexto = carrito.map(p => `${p.producto} (C$ ${p.precio})`).join(", ");
-            let total = document.getElementById("carrito-total").innerText.replace("Total: C$ ", "");
-
-            // ENVIAR A GOOGLE SHEETS
-fetch(API_URL, {
-    method: "POST",
-    body: JSON.stringify({
-        fecha: new Date().toLocaleString("es-NI", { timeZone: "America/Managua" }),
-        cliente: nota,
-        nota: nota,
-        productos: productosTexto,
-        total: total,
-        entrega: entrega,
-        pago: pago
-    })
-});
-
-
-            // ENVIAR A WhatsApp
-            let mensaje = "🛒 *Nuevo pedido desde Tecno🥭Rivas:*%0A%0A";
-
-            carrito.forEach(p => {
-                mensaje += `• ${p.producto} - C$ ${p.precio}%0A`;
-            });
-
-            mensaje += `%0A*Entrega:* ${entrega}`;
-            mensaje += `%0A*Pago:* ${pago}`;
-            mensaje += `%0A*Cliente:* ${nota}`;
-            mensaje += `%0A%0A*Total:* C$ ${total}`;
-
-            const telefono = "50557733013";
-            const url = `https://wa.me/${telefono}?text=${mensaje}`;
-
-            localStorage.removeItem("carrito");
-
-            window.location.href = url;
+                    <button class="btn-eliminar" onclick="eliminarItem(${index})">Eliminar</button>
+                </div>
+            `;
         });
 
-        /* -----------------------
-           Mostrar datos de transferencia
-        ------------------------ */
-        document.getElementById("tipo-pago").addEventListener("change", () => {
-            const pago = document.getElementById("tipo-pago").value;
-            const info = document.getElementById("info-transferencia");
+        document.getElementById("carrito-total").innerText = `Total: C$ ${total}`;
+    }
 
-            if (pago === "Transferencia") {
-                info.style.display = "block";
-            } else {
-                info.style.display = "none";
-            }
-        });
-
-        /* -----------------------
-           MENÚ MÓVIL
-        ------------------------ */
-        const menuToggle = document.getElementById("mobile-menu");
-        const navbar = document.getElementById("navbar");
-        const header = document.querySelector("header");
-
-        menuToggle.addEventListener("click", () => {
-            navbar.classList.toggle("active");
-            header.classList.toggle("menu-abierto");
-        });
-
-        /* -----------------------
-           Inicializar
-        ------------------------ */
+    function eliminarItem(index) {
+        let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+        carrito.splice(index, 1);
+        localStorage.setItem("carrito", JSON.stringify(carrito));
         cargarCarrito();
-        iniciarBanner();
+    }
 
-    </script>
+    /* -----------------------
+       ENVÍO A WHATSAPP + GOOGLE SHEETS
+    ------------------------ */
+    const API_URL = "https://script.google.com/macros/s/AKfycbz8rdQikVXimdv-FFzOyhxC_6dThU29HetqISVXL0W1uq6_XoCeMVCF4Gz8Zl1BgFXdlA/exec";
 
+    document.getElementById("btn-whatsapp").addEventListener("click", async () => {
+        let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+        let entrega = document.getElementById("tipo-entrega").value;
+        let pago = document.getElementById("tipo-pago").value;
+        let notaCompleta = document.getElementById("nota-pedido").value.trim();
+
+        if (carrito.length === 0) return alert("El carrito está vacío");
+        if (!entrega) return alert("Selecciona el tipo de entrega");
+        if (!pago) return alert("Selecciona el método de pago");
+        if (!notaCompleta || notaCompleta.length < 3) {
+            return alert("Por favor escriba su nombre y alguna nota adicional.");
+        }
+
+        // Separar nombre y nota automáticamente
+        let nombre = "";
+        let nota = "";
+        const primerSeparador = notaCompleta.indexOf(",");
+        if (primerSeparador !== -1) {
+            nombre = notaCompleta.slice(0, primerSeparador).trim();
+            nota = notaCompleta.slice(primerSeparador + 1).trim();
+        } else {
+            // Si no hay coma, tomar la primera palabra como nombre
+            let palabras = notaCompleta.split(" ");
+            nombre = palabras.shift();
+            nota = palabras.join(" ");
+        }
+
+        let productosTexto = carrito.map(p => `${p.producto} (C$ ${p.precio})`).join(", ");
+        let total = document.getElementById("carrito-total").innerText.replace("Total: C$ ", "");
+
+        // ENVIAR A GOOGLE SHEETS
+        fetch(API_URL, {
+            method: "POST",
+            body: JSON.stringify({
+                fecha: new Date().toLocaleString("es-NI", { timeZone: "America/Managua" }),
+                cliente: nombre,
+                nota: nota,
+                productos: productosTexto,
+                total: total,
+                entrega: entrega,
+                pago: pago
+            })
+        });
+
+        // ENVIAR A WhatsApp
+        let mensaje = "🛒 *Nuevo pedido desde Tecno🥭Rivas:*%0A%0A";
+        carrito.forEach(p => {
+            mensaje += `• ${p.producto} - C$ ${p.precio}%0A`;
+        });
+
+        mensaje += `%0A*Entrega:* ${entrega}`;
+        mensaje += `%0A*Pago:* ${pago}`;
+        mensaje += `%0A*Cliente:* ${nombre}`;
+        if (nota) mensaje += `%0A*Nota:* ${nota}`;
+        mensaje += `%0A%0A*Total:* C$ ${total}`;
+
+        const telefono = "50557733013";
+        const url = `https://wa.me/${telefono}?text=${mensaje}`;
+
+        localStorage.removeItem("carrito");
+        window.location.href = url;
+    });
+
+    /* -----------------------
+       Mostrar datos de transferencia
+    ------------------------ */
+    document.getElementById("tipo-pago").addEventListener("change", () => {
+        const pago = document.getElementById("tipo-pago").value;
+        const info = document.getElementById("info-transferencia");
+
+        if (pago === "Transferencia") {
+            info.style.display = "block";
+        } else {
+            info.style.display = "none";
+        }
+    });
+
+    /* -----------------------
+       MENÚ MÓVIL
+    ------------------------ */
+    const menuToggle = document.getElementById("mobile-menu");
+    const navbar = document.getElementById("navbar");
+    const header = document.querySelector("header");
+
+    menuToggle.addEventListener("click", () => {
+        navbar.classList.toggle("active");
+        header.classList.toggle("menu-abierto");
+    });
+
+    /* -----------------------
+       Inicializar
+    ------------------------ */
+    cargarCarrito();
+    iniciarBanner();
+</script>
 </body>
 </html>
