@@ -301,13 +301,30 @@ function validarFormulario(servicio){
 
 // Enviar WhatsApp
 function enviarWhatsApp(servicio){
+    let datos = {};
     let mensaje = `🛠 *Solicitud de servicio: ${servicio}* %0A`;
+
     document.querySelectorAll('#campos input, #campos select, #campos textarea')
-    .forEach(campo=>{
-        if(campo.value.trim() !== "")
-            mensaje += `%0A• *${campo.placeholder || campo.id}:* ${campo.value}`;
+    .forEach(campo => {
+        if(campo.value.trim() !== ""){
+            let clave = campo.placeholder || campo.id;
+            mensaje += `%0A• *${clave}:* ${campo.value}`;
+            datos[campo.id || clave] = campo.value;
+        }
     });
 
+    // ENVIAR A GOOGLE SHEETS
+    fetch("https://script.google.com/macros/s/AKfycbzdIdx3zch6ZO4GdlJTnGK6CWp_Q0leZRqxxgix0wvD0yxAFbgQzpfQPYiuj7L7k4ErzA/exec", {
+        method: "POST",
+        body: JSON.stringify({
+            servicio: servicio,
+            nombre: datos.nombre || "",
+            detalles: JSON.stringify(datos),
+            nota: datos.nota || ""
+        })
+    });
+
+    // ENVIAR A WHATSAPP
     const telefono = "50557733013";
     const url = `https://wa.me/${telefono}?text=${mensaje}`;
     window.location.href = url;
