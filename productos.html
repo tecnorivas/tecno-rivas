@@ -118,7 +118,9 @@
 </footer>
 
 <script>
-// JSONP callback
+// ---------------------------
+// JSONP callback para productos
+// ---------------------------
 function procesarProductos(productos) {
     const productList = document.getElementById("product-list");
     productList.innerHTML = "";
@@ -153,12 +155,16 @@ function procesarProductos(productos) {
     });
 }
 
+// ---------------------------
 // Cargar productos mediante JSONP
+// ---------------------------
 const script = document.createElement('script');
-script.src = "https://script.google.com/macros/s/AKfycbwA8g09bJQlBRAAzKJXACtAKdJmSPeCvNrNYmHSycHmq90t3wtIAzyJRRtgcbxFjNJlyQ/exec?callback=procesarProductos";
+script.src = "https://script.google.com/macros/s/AKfycbxHgG51TDptJQJ_xrBYMarfArc6ogbSYMBuMC-OnQLJLZ2ka0sEEQ_F0Yg_pkkkgBPOQA/exec";
 document.body.appendChild(script);
 
-// Carrito
+// ---------------------------
+// Función para agregar al carrito
+// ---------------------------
 function agregarAlCarrito(producto) {
     let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
     carrito.push(producto);
@@ -166,7 +172,9 @@ function agregarAlCarrito(producto) {
     alert(`${producto.producto} fue añadido a tu carrito, ve al menú y encontrarás tus productos en carrito`);
 }
 
-// Banner
+// ---------------------------
+// Animación del banner
+// ---------------------------
 function iniciarBanner() {
     let slideIndex = 0;
     const slides = document.getElementsByClassName("banner-slide");
@@ -182,7 +190,9 @@ function iniciarBanner() {
     showSlides();
 }
 
+// ---------------------------
 // Menú móvil
+// ---------------------------
 const menuToggle = document.getElementById("mobile-menu");
 const navbar = document.getElementById("navbar");
 const header = document.querySelector("header");
@@ -192,9 +202,10 @@ menuToggle.addEventListener("click", () => {
     header.classList.toggle("menu-abierto");
 });
 
-// Banner al cargar
+// ---------------------------
+// Inicializar banner al cargar
+// ---------------------------
 window.addEventListener("DOMContentLoaded", iniciarBanner);
 </script>
-
 </body>
 </html>
