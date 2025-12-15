@@ -159,7 +159,7 @@ function procesarProductos(productos) {
 // Cargar productos mediante JSONP
 // ---------------------------
 const script = document.createElement('script');
-script.src = "https://script.google.com/macros/s/AKfycbxHgG51TDptJQJ_xrBYMarfArc6ogbSYMBuMC-OnQLJLZ2ka0sEEQ_F0Yg_pkkkgBPOQA/exec";
+script.src = "https://script.google.com/macros/s/AKfycbxHgG51TDptJQJ_xrBYMarfArc6ogbSYMBuMC-OnQLJLZ2ka0sEEQ_F0Yg_pkkkgBPOQA/exec?callback=procesarProductos";
 document.body.appendChild(script);
 
 // ---------------------------
