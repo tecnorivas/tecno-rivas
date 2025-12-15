@@ -299,6 +299,11 @@ function validarFormulario(servicio){
     enviarWhatsApp(servicio);
 }
 
+function limpiarFormulario() {
+    document.getElementById("campos").innerHTML = "";
+}
+
+    
 // Enviar WhatsApp
 function enviarWhatsApp(servicio){
     let datos = {};
@@ -324,10 +329,15 @@ function enviarWhatsApp(servicio){
         })
     });
 
-    // ENVIAR A WHATSAPP
-    const telefono = "50557733013";
-    const url = `https://wa.me/${telefono}?text=${mensaje}`;
-    window.location.href = url;
+    // LIMPIAR Y CERRAR FORMULARIO
+limpiarFormulario();
+cerrarFormulario();
+
+// ENVIAR A WHATSAPP
+const telefono = "50557733013";
+const url = `https://wa.me/${telefono}?text=${mensaje}`;
+window.location.href = url;
+
 }
 
 // Menú móvil
