@@ -347,17 +347,11 @@ total = total.replace("Total: ", ""); // "C$ 1200"
         const telefono = "50557733013";
         const url = `https://wa.me/${telefono}?text=${mensaje}`;
 
-        localStorage.removeItem("carrito");
+  localStorage.removeItem("carrito");
 
-// refrescar la página antes de ir a WhatsApp
-setTimeout(() => {
-    window.location.reload();
-}, 500);
+// abrir WhatsApp
+window.location.href = url;
 
-// ir a WhatsApp
-setTimeout(() => {
-    window.location.href = url;
-}, 800);
 
     });
 
