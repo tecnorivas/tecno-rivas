@@ -7,6 +7,92 @@
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Estilos básicos para productos */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            background: #fff;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: contain;
+            margin-bottom: 10px;
+            border-radius: 8px;
+        }
+
+        .product-card h3 {
+            margin: 8px 0;
+            font-size: 18px;
+        }
+
+        .product-card p {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        .btn-comprar {
+            background: #25d366;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+            transition: background 0.2s;
+        }
+
+        .btn-comprar:hover {
+            background: #1ebe57;
+        }
+
+        .banner-container {
+            position: relative;
+            max-height: 400px;
+            overflow: hidden;
+        }
+
+        .banner-slide {
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .intro {
+            max-width: 900px;
+            margin: 30px auto;
+            text-align: center;
+        }
+
+        .intro h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .intro p {
+            font-size: 18px;
+            color: #555;
+        }
+    </style>
 </head>
 <body>
 
@@ -27,11 +113,11 @@
 
     <!-- BANNER -->
     <div class="banner-container">
-        <img class="banner-slide fade" src="img/banner1.jpg" alt="">
-        <img class="banner-slide fade" src="img/banner2.jpg" alt="">
-        <img class="banner-slide fade" src="img/banner3.jpg" alt="">
-        <img class="banner-slide fade" src="img/banner4.jpg" alt="">
-        <img class="banner-slide fade" src="img/banner5.jpg" alt="">
+        <img class="banner-slide" src="img/banner1.jpg" alt="">
+        <img class="banner-slide" src="img/banner2.jpg" alt="">
+        <img class="banner-slide" src="img/banner3.jpg" alt="">
+        <img class="banner-slide" src="img/banner4.jpg" alt="">
+        <img class="banner-slide" src="img/banner5.jpg" alt="">
     </div>
 
     <!-- INTRO -->
@@ -65,28 +151,19 @@
 
     <script>
     // ---------------------------
-    // Cargar productos desde CSV
+    // Cargar productos desde Apps Script (JSON)
     // ---------------------------
     function cargarProductos() {
-        fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vSI0-L3i2sMLEZ8eXzZ02hzQJYe4eKNYxw_1KHDsPXJeL4fBXvZpkuGEHpuRgiIIULw6kPZ3GCaswP9/pub?gid=0&single=true&output=csv")
-        .then(res => res.text())
-        .then(csvText => {
-            const lines = csvText.trim().split("\n");
-            const headers = lines[0].split(",").map(h => h.trim().toLowerCase());
+        const urlAPI = "https://script.google.com/macros/s/AKfycbxoZdJW8ma-S2VnVKGSeQ2bv5hCWm8RCPD9HGSZSUaJx2wWHYffXK1GE2TYpisy9DRcGA/exec";
+
+        fetch(urlAPI)
+        .then(res => res.json())
+        .then(productos => {
             const productList = document.getElementById("product-list");
             productList.innerHTML = "";
 
-            for (let i = 1; i < lines.length; i++) {
-                const values = lines[i].split(",");
-                if (values.length < headers.length) continue;
-
-                let item = {};
-                headers.forEach((h, idx) => {
-                    // Limpiar comillas y espacios invisibles de la celda
-                    item[h] = values[idx]?.trim().replace(/^"|"$/g, '');
-                });
-
-                if (!item.producto) continue;
+            productos.forEach(item => {
+                if (!item.producto) return;
 
                 const card = document.createElement("div");
                 card.classList.add("product-card");
@@ -113,7 +190,7 @@
                 });
 
                 productList.appendChild(card);
-            }
+            });
         })
         .catch(err => console.error("Error cargando productos desde Google Sheets:", err));
     }
@@ -159,7 +236,7 @@
         header.classList.toggle("menu-abierto");
     });
 
-    // Lanzar TODO cuando el HTML ya está listo
+    // Inicializar cuando el HTML está listo
     window.addEventListener("DOMContentLoaded", () => {
         cargarProductos();
         iniciarBanner();
