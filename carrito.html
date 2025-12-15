@@ -348,7 +348,17 @@ total = total.replace("Total: ", ""); // "C$ 1200"
         const url = `https://wa.me/${telefono}?text=${mensaje}`;
 
         localStorage.removeItem("carrito");
-        window.location.href = url;
+
+// refrescar la página antes de ir a WhatsApp
+setTimeout(() => {
+    window.location.reload();
+}, 500);
+
+// ir a WhatsApp
+setTimeout(() => {
+    window.location.href = url;
+}, 800);
+
     });
 
     /* -----------------------
