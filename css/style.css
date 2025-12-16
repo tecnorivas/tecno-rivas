@@ -264,6 +264,81 @@ footer {
     transform: scale(1.05);
 }
 
+/* =========================
+   PUBLICIDAD
+========================= */
+.publicidad {
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 0 20px;
+    text-align: center;
+}
+
+.publicidad h2 {
+    font-size: 32px;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.publicidad-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
+}
+
+.publicidad-card {
+    position: relative;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.publicidad-card:hover {
+    transform: translateY(-6px);
+}
+
+.publicidad-card img,
+.publicidad-card video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.publicidad-card.video {
+    grid-column: span 2;
+}
+
+@media (max-width: 768px) {
+    .publicidad-card.video {
+        grid-column: span 1;
+    }
+}
+
+.publicidad-card .overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 20px;
+}
+
+.publicidad-card h3 {
+    font-size: 22px;
+    margin-bottom: 5px;
+}
+
+.publicidad-card p {
+    font-size: 16px;
+    opacity: 0.9;
+}
+
+
 /* ==== FOOTER RESPONSIVE FIX ==== */
 @media (max-width: 480px) {
     .footer-container .redes {
