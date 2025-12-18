@@ -4,10 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tecno🥭Rivas | Productos</title>
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link rel="stylesheet" href="css/style.css">
+
 <style>
-/* Estilos básicos para productos */
 .product-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -21,9 +22,7 @@
     text-align: center;
     transition: transform 0.2s;
 }
-.product-card:hover {
-    transform: translateY(-5px);
-}
+.product-card:hover { transform: translateY(-5px); }
 .product-card img {
     width: 100%;
     height: 180px;
@@ -41,8 +40,6 @@
     border-radius: 8px;
     cursor: pointer;
     font-weight: bold;
-    margin-top: 10px;
-    transition: background 0.2s;
 }
 .btn-comprar:hover { background: #1ebe57; }
 .banner-container {
@@ -53,8 +50,6 @@
 .banner-slide {
     width: 100%;
     position: absolute;
-    top: 0;
-    left: 0;
     opacity: 0;
     transition: opacity 1s ease-in-out;
 }
@@ -63,10 +58,9 @@
     margin: 30px auto;
     text-align: center;
 }
-.intro h1 { font-size: 32px; margin-bottom: 10px; }
-.intro p { font-size: 18px; color: #555; }
 </style>
 </head>
+
 <body>
 
 <header>
@@ -83,28 +77,24 @@
 </div>
 </header>
 
+<!-- BANNER -->
 <div class="banner-container">
-    <img class="banner-slide" src="img/banner1.jpg" alt="">
-    <img class="banner-slide" src="img/banner2.jpg" alt="">
-    <img class="banner-slide" src="img/banner3.jpg" alt="">
-    <img class="banner-slide" src="img/banner4.jpg" alt="">
-    <img class="banner-slide" src="img/banner5.jpg" alt="">
+    <img class="banner-slide" src="img/banner1.jpg">
+    <img class="banner-slide" src="img/banner2.jpg">
+    <img class="banner-slide" src="img/banner3.jpg">
+    <img class="banner-slide" src="img/banner4.jpg">
+    <img class="banner-slide" src="img/banner5.jpg">
 </div>
 
 <section class="intro">
 <h1>Nuestros Productos</h1>
-<p>Explora nuestra amplia variedad de productos de librería y accesorios tecnológicos. Todo con calidad y al mejor precio.</p>
+<p>Explora nuestra amplia variedad de productos de librería y accesorios tecnológicos.</p>
 </section>
 
-    <!-- BUSCADOR -->
-    <div class="buscador-productos">
-        <input 
-            type="text" 
-            id="buscador" 
-            placeholder="🔍 Buscar producto..."
-            autocomplete="off"
-        >
-    </div>
+<!-- BUSCADOR -->
+<div class="buscador-productos">
+    <input type="text" id="buscador" placeholder="🔍 Buscar producto..." autocomplete="off">
+</div>
 
 <section class="promos">
 <div id="product-list" class="product-grid"></div>
@@ -128,94 +118,112 @@
 </footer>
 
 <script>
-// ---------------------------
-// JSONP callback para productos
-// ---------------------------
+// ============================
+// VARIABLES GLOBALES
+// ============================
+let productosGlobal = [];
+
+// ============================
+// CALLBACK JSONP
+// ============================
 function procesarProductos(productos) {
+    productosGlobal = productos;
+    mostrarProductos(productos);
+}
+
+// ============================
+// MOSTRAR PRODUCTOS
+// ============================
+function mostrarProductos(productos) {
     const productList = document.getElementById("product-list");
     productList.innerHTML = "";
+
+    if (productos.length === 0) {
+        productList.innerHTML = "<p>No se encontraron productos.</p>";
+        return;
+    }
 
     productos.forEach(item => {
         if (!item.producto) return;
 
         const card = document.createElement("div");
-        card.classList.add("product-card");
+        card.className = "product-card";
 
-        const imgSrc = item.imagen.startsWith('http') ? item.imagen : 'img/' + item.imagen;
+        const imgSrc = item.imagen?.startsWith("http") ? item.imagen : "img/" + item.imagen;
 
         card.innerHTML = `
-            <img src="${imgSrc}" alt="${item.producto}">
+            <img src="${imgSrc}">
             <h3>${item.producto}</h3>
-            <p class="descripcion">${item.descripcion || ""}</p>
+            <p>${item.descripcion || ""}</p>
             <p class="precio">C$ ${item.precio || ""}</p>
             <button class="btn-comprar">
                 <i class="fa-solid fa-cart-plus"></i> Añadir al carrito
             </button>
         `;
 
-        card.querySelector(".btn-comprar").addEventListener("click", () => {
-            agregarAlCarrito({
-                producto: item.producto,
-                precio: item.precio,
-                imagen: imgSrc
-            });
+        card.querySelector("button").onclick = () => agregarAlCarrito({
+            producto: item.producto,
+            precio: item.precio,
+            imagen: imgSrc
         });
 
         productList.appendChild(card);
     });
 }
 
-// ---------------------------
-// Cargar productos mediante JSONP
-// ---------------------------
-const script = document.createElement('script');
+// ============================
+// BUSCADOR
+// ============================
+document.getElementById("buscador").addEventListener("input", function () {
+    const texto = this.value.toLowerCase();
+    const filtrados = productosGlobal.filter(item =>
+        item.producto?.toLowerCase().includes(texto) ||
+        item.descripcion?.toLowerCase().includes(texto)
+    );
+    mostrarProductos(filtrados);
+});
+
+// ============================
+// CARGAR SHEETS
+// ============================
+const script = document.createElement("script");
 script.src = "https://script.google.com/macros/s/AKfycbxHgG51TDptJQJ_xrBYMarfArc6ogbSYMBuMC-OnQLJLZ2ka0sEEQ_F0Yg_pkkkgBPOQA/exec?callback=procesarProductos";
 document.body.appendChild(script);
 
-// ---------------------------
-// Función para agregar al carrito
-// ---------------------------
+// ============================
+// CARRITO
+// ============================
 function agregarAlCarrito(producto) {
-    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
     carrito.push(producto);
     localStorage.setItem("carrito", JSON.stringify(carrito));
-    alert(`${producto.producto} fue añadido a tu carrito, ve al menú y encontrarás tus productos en carrito`);
+    alert(`${producto.producto} fue añadido al carrito`);
 }
 
-// ---------------------------
-// Animación del banner
-// ---------------------------
+// ============================
+// BANNER
+// ============================
+let slideIndex = 0;
 function iniciarBanner() {
-    let slideIndex = 0;
     const slides = document.getElementsByClassName("banner-slide");
-
     function showSlides() {
         for (let i = 0; i < slides.length; i++) slides[i].style.opacity = 0;
-        slideIndex++;
-        if (slideIndex > slides.length) slideIndex = 1;
+        slideIndex = (slideIndex + 1) > slides.length ? 1 : slideIndex + 1;
         slides[slideIndex - 1].style.opacity = 1;
         setTimeout(showSlides, 4000);
     }
-
     showSlides();
 }
 
-// ---------------------------
-// Menú móvil
-// ---------------------------
+// ============================
+// MENÚ MÓVIL
+// ============================
 const menuToggle = document.getElementById("mobile-menu");
 const navbar = document.getElementById("navbar");
-const header = document.querySelector("header");
+menuToggle.onclick = () => navbar.classList.toggle("active");
 
-menuToggle.addEventListener("click", () => {
-    navbar.classList.toggle("active");
-    header.classList.toggle("menu-abierto");
-});
-
-// ---------------------------
-// Inicializar banner al cargar
-// ---------------------------
 window.addEventListener("DOMContentLoaded", iniciarBanner);
 </script>
+
 </body>
 </html>
