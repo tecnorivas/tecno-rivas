@@ -214,6 +214,17 @@ function iniciarBanner() {
     }
     showSlides();
 }
+// ============================
+// MENÚ MÓVIL (CORREGIDO)
+// ============================
+const menuToggle = document.getElementById("mobile-menu");
+const navbar = document.getElementById("navbar");
+const header = document.querySelector("header");
+
+menuToggle.addEventListener("click", () => {
+    navbar.classList.toggle("active");
+    header.classList.toggle("menu-abierto");
+});
 
 window.addEventListener("DOMContentLoaded", iniciarBanner);
 </script>
