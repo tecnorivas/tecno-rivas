@@ -426,46 +426,41 @@ function validarFormulario(servicio){
 }
 // ================= ENVÍO =================
 function enviarWhatsApp(servicio){
-    const campos = document.querySelectorAll('#campos [data-campo]');
     let mensaje = `🛠 *Solicitud de servicio: ${servicio}*%0A`;
     let datos = {};
-
-    // Guardar todos los valores visibles
-    campos.forEach(c=>{
-        datos[c.dataset.campo] = c.value || ""; // guardar siempre
-        if(c.style.display !== "none"){
-            mensaje += `%0A• *${c.placeholder}:* ${c.value || "-"}`;
-        }
-    });
-
-    // Construir "detalles" combinando todos los campos excepto nombre y nota
     let detalles = "";
-    campos.forEach(c=>{
-        if(c.dataset.campo !== "nombre" && c.dataset.campo !== "nota" && c.value){
-            detalles += (detalles ? ", " : "") + `${c.dataset.campo}: ${c.value}`;
+
+    document.querySelectorAll('#campos [data-campo]').forEach(c=>{
+        if(c.value){
+            mensaje += `%0A• *${c.placeholder}:* ${c.value}`;
+            datos[c.dataset.campo] = c.value;
+
+            // Combinar todos los campos excepto nombre y nota en "detalles"
+            if(c.dataset.campo !== "nombre" && c.dataset.campo !== "nota"){
+                detalles += (detalles ? ", " : "") + `${c.dataset.campo}: ${c.value}`;
+            }
         }
     });
 
-    // Datos que enviará Apps Script
-    const payload = {
-        servicio: servicio,
-        nombre: datos.nombre || "",
-        detalles: detalles || "-",
-        nota: datos.nota || "-"
-    };
-
-    // Enviar al Apps Script
+    // Enviar datos al Apps Script con los campos que espera
     fetch("https://script.google.com/macros/s/AKfycbxHgG51TDptJQJ_xrBYMarfArc6ogbSYMBuMC-OnQLJLZ2ka0sEEQ_F0Yg_pkkkgBPOQA/exec",{
         method:"POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-    }).then(res=>res.json())
-      .then(res=>console.log("Enviado a Sheets:", res))
-      .catch(err=>console.error("Error al enviar:", err));
+        body: JSON.stringify({
+            servicio: servicio,
+            nombre: datos.nombre || "-",
+            detalles: detalles || "-",
+            nota: datos.nota || "-"
+        })
+    })
+    .then(res => res.json())
+    .then(res => console.log("Enviado a Sheets:", res))
+    .catch(err => console.error("Error al enviar:", err));
 
     cerrarFormulario();
     window.location.href = `https://wa.me/50557733013?text=${mensaje}`;
 }
+
 
 // ================= CLICK =================
 document.querySelectorAll(".promo-item").forEach(i=>{
