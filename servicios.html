@@ -345,12 +345,12 @@ const formularios = {
 const contenedor = document.getElementById("formularios");
 contenedor.innerHTML = `
 <div id="overlay" class="form-overlay">
-  <div class="form-box">
-    <h2 id="titulo-form"></h2>
-    <div id="campos"></div>
-    <button class="btn-send" id="enviar">Enviar Solicitud</button>
-    <button class="btn-close" onclick="cerrarFormulario()">Cerrar</button>
-  </div>
+<div class="form-box">
+<h2 id="titulo-form"></h2>
+<div id="campos"></div>
+<button class="btn-send" id="enviar">Enviar Solicitud</button>
+<button class="btn-close" onclick="cerrarFormulario()">Cerrar</button>
+</div>
 </div>`;
 const overlay = document.getElementById("overlay");
 
@@ -424,43 +424,25 @@ function validarFormulario(servicio){
     }
     enviarWhatsApp(servicio);
 }
-// ================= ENVÍO =================
+
 function enviarWhatsApp(servicio){
     let mensaje = `🛠 *Solicitud de servicio: ${servicio}*%0A`;
     let datos = {};
-    let detalles = "";
-
     document.querySelectorAll('#campos [data-campo]').forEach(c=>{
         if(c.value){
             mensaje += `%0A• *${c.placeholder}:* ${c.value}`;
             datos[c.dataset.campo] = c.value;
-
-            // Combinar todos los campos excepto nombre y nota en "detalles"
-            if(c.dataset.campo !== "nombre" && c.dataset.campo !== "nota"){
-                detalles += (detalles ? ", " : "") + `${c.dataset.campo}: ${c.value}`;
-            }
         }
     });
 
-    // Enviar datos al Apps Script con los campos que espera
     fetch("https://script.google.com/macros/s/AKfycbxHgG51TDptJQJ_xrBYMarfArc6ogbSYMBuMC-OnQLJLZ2ka0sEEQ_F0Yg_pkkkgBPOQA/exec",{
         method:"POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            servicio: servicio,
-            nombre: datos.nombre || "-",
-            detalles: detalles || "-",
-            nota: datos.nota || "-"
-        })
-    })
-    .then(res => res.json())
-    .then(res => console.log("Enviado a Sheets:", res))
-    .catch(err => console.error("Error al enviar:", err));
+        body:JSON.stringify({servicio,datos})
+    });
 
     cerrarFormulario();
     window.location.href = `https://wa.me/50557733013?text=${mensaje}`;
 }
-
 
 // ================= CLICK =================
 document.querySelectorAll(".promo-item").forEach(i=>{
