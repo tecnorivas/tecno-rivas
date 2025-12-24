@@ -424,41 +424,44 @@ function validarFormulario(servicio){
     }
     enviarWhatsApp(servicio);
 }
-
+// ================= ENVÍO =================
 function enviarWhatsApp(servicio){
-    let mensaje = `🛠 *Solicitud de servicio: ${servicio}*%0A`;
-
-    // Recopilar todos los campos visibles
-    let datos = {};
     const campos = document.querySelectorAll('#campos [data-campo]');
+    let mensaje = `🛠 *Solicitud de servicio: ${servicio}*%0A`;
+    let datos = {};
+
+    // Guardar todos los valores visibles
     campos.forEach(c=>{
-        if(c.style.display !== "none" && c.value){
-            mensaje += `%0A• *${c.placeholder}:* ${c.value}`;
+        datos[c.dataset.campo] = c.value || ""; // guardar siempre
+        if(c.style.display !== "none"){
+            mensaje += `%0A• *${c.placeholder}:* ${c.value || "-"}`;
         }
-        datos[c.dataset.campo] = c.value || "";
     });
 
-    // Generar "detalles" combinando campos relevantes
+    // Construir "detalles" combinando todos los campos excepto nombre y nota
     let detalles = "";
-    const camposDetalles = ['cantidad','tipo','banpro_servicio','rapibac_servicio','seguro','placa','anio','cedula','servicio_basico','referencia','monto','celular','correo'];
-    for(let campo of camposDetalles){
-        const elem = document.querySelector(`#campos [data-campo="${campo}"]`);
-        if(elem && elem.style.display !== "none" && elem.value){
-            detalles += (detalles ? ", " : "") + elem.value;
+    campos.forEach(c=>{
+        if(c.dataset.campo !== "nombre" && c.dataset.campo !== "nota" && c.value){
+            detalles += (detalles ? ", " : "") + `${c.dataset.campo}: ${c.value}`;
         }
-    }
+    });
 
-    // Enviar datos a Google Sheets
+    // Datos que enviará Apps Script
+    const payload = {
+        servicio: servicio,
+        nombre: datos.nombre || "",
+        detalles: detalles || "-",
+        nota: datos.nota || "-"
+    };
+
+    // Enviar al Apps Script
     fetch("https://script.google.com/macros/s/AKfycbxHgG51TDptJQJ_xrBYMarfArc6ogbSYMBuMC-OnQLJLZ2ka0sEEQ_F0Yg_pkkkgBPOQA/exec",{
         method:"POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            servicio: servicio,
-            nombre: document.querySelector('#campos [data-campo="nombre"]').value || "",
-            detalles: detalles,
-            nota: document.querySelector('#campos [data-campo="nota"]').value || ""
-        })
-    });
+        body: JSON.stringify(payload)
+    }).then(res=>res.json())
+      .then(res=>console.log("Enviado a Sheets:", res))
+      .catch(err=>console.error("Error al enviar:", err));
 
     cerrarFormulario();
     window.location.href = `https://wa.me/50557733013?text=${mensaje}`;
