@@ -429,9 +429,10 @@ function enviarWhatsApp(servicio){
     let mensaje = `🛠 *Solicitud de servicio: ${servicio}*%0A`;
     let datos = {};
     document.querySelectorAll('#campos [data-campo]').forEach(c=>{
-        if(c.value){
-            mensaje += `%0A• *${c.placeholder}:* ${c.value}`;
-            datos[c.dataset.campo] = c.value;
+        // Solo enviar campos visibles
+        if(c.style.display !== "none"){
+            datos[c.dataset.campo] = c.value || ""; // aseguramos que no sea undefined
+            mensaje += `%0A• *${c.placeholder}:* ${c.value || "-"}`;
         }
     });
 
