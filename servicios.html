@@ -345,12 +345,12 @@ const formularios = {
 const contenedor = document.getElementById("formularios");
 contenedor.innerHTML = `
 <div id="overlay" class="form-overlay">
-<div class="form-box">
-<h2 id="titulo-form"></h2>
-<div id="campos"></div>
-<button class="btn-send" id="enviar">Enviar Solicitud</button>
-<button class="btn-close" onclick="cerrarFormulario()">Cerrar</button>
-</div>
+  <div class="form-box">
+    <h2 id="titulo-form"></h2>
+    <div id="campos"></div>
+    <button class="btn-send" id="enviar">Enviar Solicitud</button>
+    <button class="btn-close" onclick="cerrarFormulario()">Cerrar</button>
+  </div>
 </div>`;
 const overlay = document.getElementById("overlay");
 
@@ -427,34 +427,42 @@ function validarFormulario(servicio){
 
 function enviarWhatsApp(servicio){
     let mensaje = `🛠 *Solicitud de servicio: ${servicio}*%0A`;
+
+    // Recopilar todos los campos visibles
     let datos = {};
-
-    // Recorrer todos los campos y guardar sus valores
-    document.querySelectorAll('#campos [data-campo]').forEach(c => {
-        datos[c.dataset.campo] = c.value || ""; // siempre enviamos el campo, aunque esté vacío
-
-        // Agregar al mensaje de WhatsApp solo si es visible
-        if(c.style.display !== "none"){
-            mensaje += `%0A• *${c.placeholder}:* ${c.value || "-"}`;
+    const campos = document.querySelectorAll('#campos [data-campo]');
+    campos.forEach(c=>{
+        if(c.style.display !== "none" && c.value){
+            mensaje += `%0A• *${c.placeholder}:* ${c.value}`;
         }
+        datos[c.dataset.campo] = c.value || "";
     });
 
-    // Enviar los datos a Google Sheets mediante Apps Script
-    fetch("https://script.google.com/macros/s/AKfycbxHgG51TDptJQJ_xrBYMarfArc6ogbSYMBuMC-OnQLJLZ2ka0sEEQ_F0Yg_pkkkgBPOQA/exec", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" }, // IMPORTANTE
-        body: JSON.stringify({ servicio, datos })
-    }).then(res => {
-        console.log("Datos enviados a Sheets correctamente");
-    }).catch(err => {
-        console.error("Error al enviar los datos a Sheets:", err);
+    // Generar "detalles" combinando campos relevantes
+    let detalles = "";
+    const camposDetalles = ['cantidad','tipo','banpro_servicio','rapibac_servicio','seguro','placa','anio','cedula','servicio_basico','referencia','monto','celular','correo'];
+    for(let campo of camposDetalles){
+        const elem = document.querySelector(`#campos [data-campo="${campo}"]`);
+        if(elem && elem.style.display !== "none" && elem.value){
+            detalles += (detalles ? ", " : "") + elem.value;
+        }
+    }
+
+    // Enviar datos a Google Sheets
+    fetch("https://script.google.com/macros/s/AKfycbxHgG51TDptJQJ_xrBYMarfArc6ogbSYMBuMC-OnQLJLZ2ka0sEEQ_F0Yg_pkkkgBPOQA/exec",{
+        method:"POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            servicio: servicio,
+            nombre: document.querySelector('#campos [data-campo="nombre"]').value || "",
+            detalles: detalles,
+            nota: document.querySelector('#campos [data-campo="nota"]').value || ""
+        })
     });
 
-    // Cerrar el formulario y abrir WhatsApp
     cerrarFormulario();
     window.location.href = `https://wa.me/50557733013?text=${mensaje}`;
 }
-
 
 // ================= CLICK =================
 document.querySelectorAll(".promo-item").forEach(i=>{
