@@ -154,25 +154,6 @@
     <h3><i class="fa-solid fa-car-side"></i> Seguros de Vehículos</h3>
     <p>Tu tranquilidad es nuestra prioridad. Más que un seguro, es un compromiso.</p>
 </div>
-
-<div class="promo-item">
-    <img src="img/servicio_pos.jpg" alt="POS">
-    <h3><i class="fa-solid fa-credit-card"></i> Agente Banpro</h3>
-    <p>Pagos con tarjeta de débito y crédito de forma segura y rápida.</p>
-</div>
-
-<div class="promo-item">
-    <img src="img/servicio_policia.jpg" alt="Pagos Policiales">
-    <h3><i class="fa-solid fa-shield-halved"></i> Tramites en linea Policiales</h3>
-    <p>Pago de multas, récord policial y trámites relacionados.</p>
-</div>
-
-<div class="promo-item">
-    <img src="img/servicio_rapibac.jpg" alt="RAPIBAC">
-    <h3><i class="fa-solid fa-building-columns"></i> RAPIBAC</h3>
-    <p>Pago de servicios básicos y financieros afiliados a RAPIBAC.</p>
-</div>
-
 <div id="formularios"></div>
 </section>
 
@@ -194,7 +175,7 @@
 </footer>
 
 <script>
-// ================= BANNER =================
+// Banner
 let slideIndex = 0;
 const slides = document.getElementsByClassName("banner-slide");
 function showSlides() {
@@ -206,248 +187,168 @@ function showSlides() {
 }
 showSlides();
 
-// ================= FORMULARIOS =================
+// Formularios
 const formularios = {
-"Impresiones y Copias": `
-<input data-campo="nombre" placeholder="Su nombre">
-<input data-campo="cantidad" type="number" placeholder="Cantidad">
-<textarea data-campo="nota" placeholder="Detalles del trabajo..."></textarea>
-<p class="info">Adjunte en WhatsApp el archivo a imprimir.</p>
-`,
-"Escaneo y Digitalización": `
-<input data-campo="nombre" placeholder="Su nombre">
-<select data-campo="cantidad">
-<option value="">Cantidad de documentos</option>
-<option>1-5</option>
-<option>6-20</option>
-<option>Más de 20</option>
-</select>
-<textarea data-campo="nota" placeholder="Nota adicional..."></textarea>
-<p class="info">Adjunte en WhatsApp el archivo a escanear.</p>
-`,
-"Diseño y Edición": `
-<input data-campo="nombre" placeholder="Su nombre">
-<select data-campo="tipo">
-<option value="">Tipo de diseño</option>
-<option>Logo</option>
-<option>Currículum</option>
-<option>Tarjeta</option>
-<option>Poster</option>
-</select>
-<textarea data-campo="nota" placeholder="Detalles del diseño..."></textarea>
-`,
-"Encolochado": `
-<input data-campo="nombre" placeholder="Su nombre">
-<select data-campo="tipo">
-<option value="">Tipo de encuadernado</option>
-<option>Espiral</option>
-<option>Térmico</option>
-</select>
-<input data-campo="cantidad" type="number" placeholder="Cantidad de hojas">
-<textarea data-campo="nota" placeholder="Nota adicional..."></textarea>
-`,
-"Fotocopias": `
-<input data-campo="nombre" placeholder="Su nombre">
-<input data-campo="cantidad" type="number" placeholder="Cantidad de copias">
-<textarea data-campo="nota" placeholder="Nota adicional..."></textarea>
-`,
-"Fotos Tamaño Carnet o Pasaporte": `
-<input data-campo="nombre" placeholder="Su nombre">
-<select data-campo="tipo">
-<option value="">Tipo de foto</option>
-<option>Carnet</option>
-<option>Pasaporte</option>
-</select>
-<input data-campo="cantidad" type="number" placeholder="Cantidad">
-<textarea data-campo="nota" placeholder="Nota adicional..."></textarea>
-<p class="info">Las fotos son tomadas en la tienda.</p>
-`,
-"Seguros de Vehículos": `
-<input data-campo="nombre" placeholder="Su nombre">
-<select data-campo="seguro">
-<option value="">Tipo de seguro</option>
-<option>Cobertura total</option>
-<option>Daños a terceros</option>
-<option>Renovación</option>
-</select>
-<input data-campo="placa" placeholder="Placa del vehículo">
-<input data-campo="anio" type="number" placeholder="Año del vehículo">
-<textarea data-campo="nota" placeholder="Nota adicional..."></textarea>
-`,
-"Agente Banpro": `
-<input data-campo="nombre" placeholder="Su nombre">
-<select data-campo="banpro_servicio">
-<option value="">Seleccione servicio Banpro</option>
-<option>Billetera Móvil</option>
-<option>Consulta de saldo</option>
-<option>Retiro de efectivo</option>
-<option>Depósitos</option>
-<option>Pago de tarjeta de crédito</option>
-<option>Pago de préstamos</option>
-<option>Pago de servicios básicos</option>
-<option>Pago de impuestos</option>
-<option>Remesas internacionales</option>
-<option>Compra de tiempo aire</option>
-<option>Pago de reposición de cédula</option>
-<option>Certificados y trámites</option>
-</select>
-<input data-campo="monto" type="number" placeholder="Monto" style="display:none">
-<select data-campo="servicio_basico" style="display:none">
-<option value="">Seleccione servicio básico</option>
-<option>Agua</option>
-<option>Luz</option>
-<option>Internet</option>
-<option>Cable</option>
-</select>
-<textarea data-campo="nota" placeholder="Detalle adicional..."></textarea>
-<p class="info">Estos servicios son realizados presencialmente en tienda.</p>
-`,
-"RAPIBAC": `
-<input data-campo="nombre" placeholder="Su nombre">
-<select data-campo="rapibac_servicio">
-<option value="">Servicio Rapibac</option>
-<option>Retiro de efectivo</option>
-<option>Depósito en cuenta</option>
-<option>Pago de tarjeta de crédito</option>
-<option>Pago de servicios públicos</option>
-<option>Pago de préstamos</option>
-<option>Consulta de saldos</option>
-<option>Recarga de celular</option>
-</select>
-<input data-campo="referencia" placeholder="Número de referencia / cuenta" style="display:none">
-<input data-campo="monto" type="number" placeholder="Monto a pagar / retirar" style="display:none">
-<textarea data-campo="nota" placeholder="Detalles adicionales..."></textarea>
-<p class="info">Servicio presencial, conserva tu comprobante.</p>
-`,
-"Tramites en linea Policiales": `
-<input data-campo="nombre" placeholder="Su nombre completo">
-<input data-campo="celular" placeholder="Número de celular">
-<input data-campo="correo" placeholder="Correo electrónico">
-<select data-campo="tipo_tramite">
-<option value="">Seleccione trámite en línea</option>
-<option value="record">Récord policial / Certificado de Conducta</option>
-<option value="multa">Pago de multas de tránsito</option>
-<option value="licencia_renovacion">Licencia - renovación</option>
-<option value="licencia_reposicion">Licencia - reposición</option>
-<option value="certificado_vehiculo">Certificado de vehículo</option>
-<option value="placas">Reposición de placas</option>
-<option value="recurso">Presentar recurso</option>
-</select>
-<input data-campo="cedula" placeholder="Número de cédula" style="display:none">
-<input data-campo="placa" placeholder="Placa del vehículo" style="display:none">
-<input data-campo="monto" type="number" placeholder="Monto a pagar" style="display:none">
-<textarea data-campo="nota" placeholder="Detalle adicional..."></textarea>
-<p class="info">Todos los pagos se realizan en Tienda.</p>
-`
+    "Impresiones y Copias": `
+        <input id='nombre' placeholder='Su nombre'>
+        <input id='cantidad' type='number' placeholder='Cantidad'>
+        <textarea id='nota' placeholder='Detalles del trabajo...'></textarea>
+        <p class='info'>Adjunte en WhatsApp el archivo a imprimir.</p>
+    `,
+    "Escaneo y Digitalización": `
+        <input id='nombre' placeholder='Su nombre'>
+        <select id='cantidad'>
+            <option value=''>Cantidad de documentos</option>
+            <option>1-5</option>
+            <option>6-20</option>
+            <option>Más de 20</option>
+        </select>
+        <textarea id='nota' placeholder='Nota adicional...'></textarea>
+        <p class='info'>Adjunte en WhatsApp el archivo a escanear.</p>
+    `,
+    "Diseño y Edición": `
+        <input id='nombre' placeholder='Su nombre'>
+        <select id='tipo'>
+            <option value=''>Tipo de diseño</option>
+            <option>Logo</option>
+            <option>Currículum</option>
+            <option>Tarjeta</option>
+            <option>Poster</option>
+        </select>
+        <textarea id='nota' placeholder='Detalles del diseño...'></textarea>
+    `,
+    "Encuadernado": `
+        <input id='nombre' placeholder='Su nombre'>
+        <select id='tipo'>
+            <option value=''>Tipo de encuadernado</option>
+            <option>Espiral</option>
+            <option>Térmico</option>
+        </select>
+        <input id='cantidad' type='number' placeholder='Cantidad de hojas'>
+        <textarea id='nota' placeholder='Nota adicional...'></textarea>
+    `,
+    "Fotocopias": `
+        <input id='nombre' placeholder='Su nombre'>
+        <input id='cantidad' type='number' placeholder='Cantidad de copias'>
+        <textarea id='nota' placeholder='Nota adicional...'></textarea>
+    `,
+    "Fotos Tamaño Carnet o Pasaporte": `
+        <input id='nombre' placeholder='Su nombre'>
+        <select id='tipo'>
+            <option value=''>Tipo de foto</option>
+            <option>Carnet</option>
+            <option>Pasaporte</option>
+        </select>
+        <input id='cantidad' type='number' placeholder='Cantidad'>
+        <textarea id='nota' placeholder='Nota adicional...'></textarea>
+        <p class='info'>Las fotos son tomadas en la tienda.</p>
+    `,
+    "Seguros de Vehículos": `
+        <input id='nombre' placeholder='Su nombre'>
+        <select id='seguro'>
+            <option value=''>Tipo de seguro</option>
+            <option>Cobertura total</option>
+            <option>Daños a terceros</option>
+            <option>Renovación</option>
+        </select>
+        <input id='placa' placeholder='Placa del vehículo'>
+        <input id='anio' type='number' placeholder='Año del vehículo'>
+        <textarea id='nota' placeholder='Nota adicional...'></textarea>
+    `
 };
 
-// ================= OVERLAY =================
+// Crear overlay
 const contenedor = document.getElementById("formularios");
 contenedor.innerHTML = `
-<div id="overlay" class="form-overlay">
-<div class="form-box">
-<h2 id="titulo-form"></h2>
-<div id="campos"></div>
-<button class="btn-send" id="enviar">Enviar Solicitud</button>
-<button class="btn-close" onclick="cerrarFormulario()">Cerrar</button>
+<div id='overlay' class='form-overlay'>
+    <div class='form-box'>
+        <h2 id='titulo-form'></h2>
+        <div id='campos'></div>
+        <button class='btn-send' id='enviar'>Enviar Solicitud</button>
+        <button class='btn-close' onclick='cerrarFormulario()'>Cerrar</button>
+    </div>
 </div>
-</div>`;
+`;
 const overlay = document.getElementById("overlay");
 
+// Abrir formulario
 function abrirFormulario(servicio){
     document.getElementById("titulo-form").innerText = servicio;
     document.getElementById("campos").innerHTML = formularios[servicio];
     overlay.style.display = "flex";
-    document.getElementById("enviar").onclick = ()=>validarFormulario(servicio);
+
+    document.getElementById("enviar").onclick = function() { validarFormulario(servicio); };
 }
-function cerrarFormulario(){ overlay.style.display="none"; }
 
-// ================= EVENTOS DINÁMICOS =================
-document.addEventListener("change", e=>{
-    const c = e.target;
-    const cont = document.getElementById("campos");
+function cerrarFormulario(){ overlay.style.display = "none"; }
 
-    // Tramites policiales
-    if(c.dataset.campo==="tipo_tramite"){
-        cont.querySelectorAll('[data-campo="cedula"],[data-campo="placa"],[data-campo="monto"]').forEach(x=>x.style.display="none");
-        if(c.value==="record") cont.querySelector('[data-campo="cedula"]').style.display="block";
-        if(c.value==="multa"){
-            cont.querySelector('[data-campo="cedula"]').style.display="block";
-            cont.querySelector('[data-campo="placa"]').style.display="block";
-            cont.querySelector('[data-campo="monto"]').style.display="block";
-        }
-        if(c.value==="licencia_renovacion"||c.value==="licencia_reposicion")
-            cont.querySelector('[data-campo="cedula"]').style.display="block";
-        if(c.value==="certificado_vehiculo"||c.value==="placas"||c.value==="recurso"){
-            cont.querySelector('[data-campo="cedula"]').style.display="block";
-            cont.querySelector('[data-campo="placa"]').style.display="block";
-        }
-    }
-
-    // Banpro
-    if(c.dataset.campo==="banpro_servicio"){
-        const m = cont.querySelector('[data-campo="monto"]');
-        const sb = cont.querySelector('[data-campo="servicio_basico"]');
-        if(c.value==="Pago de servicios básicos"){
-            m.style.display = "block";
-            sb.style.display = "block";
-        } else if(c.value==="Consulta de saldo"){
-            m.style.display = "none";
-            if(sb) sb.style.display = "none";
-        } else {
-            m.style.display = c.value ? "block":"none";
-            if(sb) sb.style.display = "none";
-        }
-    }
-
-    // RAPIBAC
-    if(c.dataset.campo==="rapibac_servicio"){
-        const referencia = cont.querySelector('[data-campo="referencia"]');
-        const monto = cont.querySelector('[data-campo="monto"]');
-        referencia.style.display="block";
-        if(["Retiro de efectivo","Depósito en cuenta","Pago de tarjeta de crédito","Pago de servicios públicos","Pago de préstamos","Recarga de celular"].includes(c.value)){
-            monto.style.display = "block";
-        } else {
-            monto.style.display = "none";
-        }
-    }
+// Detectar clic en servicios
+document.querySelectorAll(".promo-item").forEach(item=>{
+    item.onclick = () => abrirFormulario(item.querySelector("h3").textContent.trim());
 });
 
-// ================= ENVÍO =================
+// Validar campos
 function validarFormulario(servicio){
-    const campos = document.querySelectorAll('#campos [data-campo]');
-    for(let c of campos){
-        if(c.style.display!=="none" && c.value.trim()===""){
-            alert("Por favor complete todos los campos");
+    let campos = document.querySelectorAll('#campos input, #campos select, #campos textarea');
+    for(let campo of campos){
+        if(campo.value.trim() === ""){
+            alert("Por favor complete todos los campos antes de enviar.");
             return;
         }
     }
     enviarWhatsApp(servicio);
 }
 
+function limpiarFormulario() {
+    document.getElementById("campos").innerHTML = "";
+}
+
+    
+// Enviar WhatsApp
 function enviarWhatsApp(servicio){
-    let mensaje = `🛠 *Solicitud de servicio: ${servicio}*%0A`;
     let datos = {};
-    document.querySelectorAll('#campos [data-campo]').forEach(c=>{
-        if(c.value){
-            mensaje += `%0A• *${c.placeholder}:* ${c.value}`;
-            datos[c.dataset.campo] = c.value;
+    let mensaje = `🛠 *Solicitud de servicio: ${servicio}* %0A`;
+
+    document.querySelectorAll('#campos input, #campos select, #campos textarea')
+    .forEach(campo => {
+        if(campo.value.trim() !== ""){
+            let clave = campo.placeholder || campo.id;
+            mensaje += `%0A• *${clave}:* ${campo.value}`;
+            datos[campo.id || clave] = campo.value;
         }
     });
 
-    fetch("https://script.google.com/macros/s/AKfycbxHgG51TDptJQJ_xrBYMarfArc6ogbSYMBuMC-OnQLJLZ2ka0sEEQ_F0Yg_pkkkgBPOQA/exec",{
-        method:"POST",
-        body:JSON.stringify({servicio,datos})
+    // ENVIAR A GOOGLE SHEETS
+    fetch("https://script.google.com/macros/s/AKfycbxHgG51TDptJQJ_xrBYMarfArc6ogbSYMBuMC-OnQLJLZ2ka0sEEQ_F0Yg_pkkkgBPOQA/exec", {
+        method: "POST",
+        body: JSON.stringify({
+            servicio: servicio,
+            nombre: datos.nombre || "",
+            detalles: JSON.stringify(datos),
+            nota: datos.nota || ""
+        })
     });
 
-    cerrarFormulario();
-    window.location.href = `https://wa.me/50557733013?text=${mensaje}`;
+    // LIMPIAR Y CERRAR FORMULARIO
+limpiarFormulario();
+cerrarFormulario();
+
+// ENVIAR A WHATSAPP
+const telefono = "50557733013";
+const url = `https://wa.me/${telefono}?text=${mensaje}`;
+window.location.href = url;
+
 }
 
-// ================= CLICK =================
-document.querySelectorAll(".promo-item").forEach(i=>{
-    i.onclick = ()=>abrirFormulario(i.querySelector("h3").textContent.trim());
+// Menú móvil
+const menuToggle = document.getElementById("mobile-menu");
+const navbar = document.getElementById("navbar");
+const header = document.querySelector("header");
+menuToggle.addEventListener("click", () => {
+    navbar.classList.toggle("active");
+    header.classList.toggle("menu-abierto");
 });
 </script>
+
 </body>
 </html>
