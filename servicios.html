@@ -154,6 +154,25 @@
     <h3><i class="fa-solid fa-car-side"></i> Seguros de Vehículos</h3>
     <p>Tu tranquilidad es nuestra prioridad. Más que un seguro, es un compromiso.</p>
 </div>
+
+<div class="promo-item">
+    <img src="img/servicio_pos.jpg" alt="POS">
+    <h3><i class="fa-solid fa-credit-card"></i> Agente Banpro</h3>
+    <p>Pagos con tarjeta de débito y crédito de forma segura y rápida.</p>
+</div>
+
+<div class="promo-item">
+    <img src="img/servicio_policia.jpg" alt="Pagos Policiales">
+    <h3><i class="fa-solid fa-shield-halved"></i> Tramites en linea Policiales</h3>
+    <p>Pago de multas, récord policial y trámites relacionados.</p>
+</div>
+
+<div class="promo-item">
+    <img src="img/servicio_rapibac.jpg" alt="RAPIBAC">
+    <h3><i class="fa-solid fa-building-columns"></i> RAPIBAC</h3>
+    <p>Pago de servicios básicos y financieros afiliados a RAPIBAC.</p>
+</div>
+    
 <div id="formularios"></div>
 </section>
 
@@ -254,7 +273,71 @@ const formularios = {
         <input id='placa' placeholder='Placa del vehículo'>
         <input id='anio' type='number' placeholder='Año del vehículo'>
         <textarea id='nota' placeholder='Nota adicional...'></textarea>
-    `
+    `"Agente Banpro": `
+<input data-campo="nombre" placeholder="Su nombre">
+<select data-campo="banpro_servicio">
+<option value="">Seleccione servicio Banpro</option>
+<option>Billetera Móvil</option>
+<option>Consulta de saldo</option>
+<option>Retiro de efectivo</option>
+<option>Depósitos</option>
+<option>Pago de tarjeta de crédito</option>
+<option>Pago de préstamos</option>
+<option>Pago de servicios básicos</option>
+<option>Pago de impuestos</option>
+<option>Remesas internacionales</option>
+<option>Compra de tiempo aire</option>
+<option>Pago de reposición de cédula</option>
+<option>Certificados y trámites</option>
+</select>
+<input data-campo="monto" type="number" placeholder="Monto" style="display:none">
+<select data-campo="servicio_basico" style="display:none">
+<option value="">Seleccione servicio básico</option>
+<option>Agua</option>
+<option>Luz</option>
+<option>Internet</option>
+<option>Cable</option>
+</select>
+<textarea data-campo="nota" placeholder="Detalle adicional..."></textarea>
+<p class="info">Estos servicios son realizados presencialmente en tienda.</p>
+`,
+"RAPIBAC": `
+<input data-campo="nombre" placeholder="Su nombre">
+<select data-campo="rapibac_servicio">
+<option value="">Servicio Rapibac</option>
+<option>Retiro de efectivo</option>
+<option>Depósito en cuenta</option>
+<option>Pago de tarjeta de crédito</option>
+<option>Pago de servicios públicos</option>
+<option>Pago de préstamos</option>
+<option>Consulta de saldos</option>
+<option>Recarga de celular</option>
+</select>
+<input data-campo="referencia" placeholder="Número de referencia / cuenta" style="display:none">
+<input data-campo="monto" type="number" placeholder="Monto a pagar / retirar" style="display:none">
+<textarea data-campo="nota" placeholder="Detalles adicionales..."></textarea>
+<p class="info">Servicio presencial, conserva tu comprobante.</p>
+`,
+"Tramites en linea Policiales": `
+<input data-campo="nombre" placeholder="Su nombre completo">
+<input data-campo="celular" placeholder="Número de celular">
+<input data-campo="correo" placeholder="Correo electrónico">
+<select data-campo="tipo_tramite">
+<option value="">Seleccione trámite en línea</option>
+<option value="record">Récord policial / Certificado de Conducta</option>
+<option value="multa">Pago de multas de tránsito</option>
+<option value="licencia_renovacion">Licencia - renovación</option>
+<option value="licencia_reposicion">Licencia - reposición</option>
+<option value="certificado_vehiculo">Certificado de vehículo</option>
+<option value="placas">Reposición de placas</option>
+<option value="recurso">Presentar recurso</option>
+</select>
+<input data-campo="cedula" placeholder="Número de cédula" style="display:none">
+<input data-campo="placa" placeholder="Placa del vehículo" style="display:none">
+<input data-campo="monto" type="number" placeholder="Monto a pagar" style="display:none">
+<textarea data-campo="nota" placeholder="Detalle adicional..."></textarea>
+<p class="info">Todos los pagos se realizan en Tienda.</p>
+`
 };
 
 // Crear overlay
