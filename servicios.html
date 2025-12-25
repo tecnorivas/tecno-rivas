@@ -12,51 +12,69 @@
 <link rel="stylesheet" href="css/style.css">
 
 <style>
-.form-overlay{
+.form-overlay {
     position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,.6);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
     display: none;
     justify-content: center;
     align-items: center;
     z-index: 9999;
 }
-.form-box{
-    background: #fff;
+
+.form-box {
+    background: white;
     width: 90%;
     max-width: 450px;
     padding: 20px;
     border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
-.form-box input,
-.form-box select,
-.form-box textarea{
+
+.form-box h2 {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.form-box p.info {
+    font-size: 14px;
+    color: #555;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.form-box input, .form-box select, .form-box textarea {
     width: 100%;
     padding: 10px;
     margin-top: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
 }
-.btn-send{
+
+.btn-send {
+    margin-top: 15px;
+    width: 100%;
+    padding: 12px;
     background: #25d366;
     color: #fff;
-    padding: 12px;
-    width: 100%;
-    margin-top: 15px;
     border: none;
+    border-radius: 10px;
+    font-size: 18px;
     cursor: pointer;
 }
-.btn-close{
-    background: #ff4b4b;
-    color: #fff;
-    padding: 10px;
-    width: 100%;
+
+.btn-close {
     margin-top: 10px;
+    width: 100%;
+    padding: 10px;
+    background: #ff4b4b;
+    color: white;
     border: none;
+    border-radius: 10px;
     cursor: pointer;
-}
-.info{
-    font-size: 13px;
-    color: #555;
 }
 </style>
 </head>
@@ -64,144 +82,243 @@
 <body>
 
 <header>
-<div class="container-header">
-<h1 class="logo">Tecno🥭Rivas</h1>
-<nav id="navbar">
-<a href="index.html"><i class="fa-solid fa-house"></i> Inicio</a>
-<a href="productos.html"><i class="fa-solid fa-box-open"></i> Productos</a>
-<a href="servicios.html"><i class="fa-solid fa-print"></i> Servicios</a>
-<a href="carrito.html"><i class="fa-solid fa-cart-shopping"></i> Carrito</a>
-<a href="contacto.html"><i class="fa-solid fa-envelope"></i> Contacto</a>
-</nav>
-<div class="menu-toggle" id="mobile-menu">MENU <i class="fa-solid fa-bars"></i></div>
-</div>
+    <div class="container-header">
+        <h1 class="logo">Tecno🥭Rivas</h1>
+        <nav id="navbar">
+            <a href="index.html"><i class="fa-solid fa-house"></i> Inicio</a>
+            <a href="productos.html"><i class="fa-solid fa-box-open"></i> Productos</a>
+            <a href="servicios.html"><i class="fa-solid fa-print"></i> Servicios</a>
+            <a href="carrito.html"><i class="fa-solid fa-cart-shopping"></i> Carrito</a>
+            <a href="contacto.html"><i class="fa-solid fa-envelope"></i> Contacto</a>
+        </nav>
+        <div class="menu-toggle" id="mobile-menu">MENU 
+            <i class="fa-solid fa-bars"></i>
+        </div>
+    </div>
 </header>
 
 <div class="banner-container">
-<img class="banner-slide" src="img/banner1.jpg">
-<img class="banner-slide" src="img/banner2.jpg">
-<img class="banner-slide" src="img/banner3.jpg">
+    <img class="banner-slide fade" src="img/banner1.jpg">
+    <img class="banner-slide fade" src="img/banner2.jpg">
+    <img class="banner-slide fade" src="img/banner3.jpg">
+    <img class="banner-slide fade" src="img/banner4.jpg">
+    <img class="banner-slide fade" src="img/banner5.jpg">
 </div>
 
 <section class="intro">
-<h1>Servicios que ofrecemos</h1>
-<p>Soluciones rápidas y profesionales.</p>
+    <h1>Servicios que ofrecemos</h1>
+    <p>
+        En Tecno🥭Rivas te brindamos soluciones rápidas, modernas y profesionales en impresiones,
+        copias, digitación, diseño, y más.
+    </p>
 </section>
 
 <section class="promos">
+<div class="promo-item">
+    <img src="img/servicio_impresion.jpg">
+    <h3><i class="fa-solid fa-print"></i> Impresiones y Copias</h3>
+</div>
 
-<div class="promo-item"><h3>Impresiones y Copias</h3></div>
-<div class="promo-item"><h3>Escaneo y Digitalización</h3></div>
-<div class="promo-item"><h3>Diseño y Edición</h3></div>
-<div class="promo-item"><h3>Encolochado</h3></div>
-<div class="promo-item"><h3>Fotocopias</h3></div>
-<div class="promo-item"><h3>Fotos Tamaño Carnet o Pasaporte</h3></div>
-<div class="promo-item"><h3>Seguros de Vehículos</h3></div>
-<div class="promo-item"><h3>Agente Banpro</h3></div>
-<div class="promo-item"><h3>RAPIBAC</h3></div>
-<div class="promo-item"><h3>Tramites en linea Policiales</h3></div>
+<div class="promo-item">
+    <img src="img/servicio_digitalizacion.jpg">
+    <h3><i class="fa-solid fa-file-arrow-up"></i> Escaneo y Digitalización</h3>
+</div>
+
+<div class="promo-item">
+    <img src="img/servicio_diseno.jpg">
+    <h3><i class="fa-solid fa-pen-nib"></i> Diseño y Edición</h3>
+</div>
+
+<div class="promo-item">
+    <img src="img/servicio_encuadernado.jpg">
+    <h3><i class="fa-solid fa-book"></i> Encolochado</h3>
+</div>
+
+<div class="promo-item">
+    <img src="img/servicio_fotocopias.jpg">
+    <h3><i class="fa-solid fa-copy"></i> Fotocopias</h3>
+</div>
+
+<div class="promo-item">
+    <img src="img/servicio_fotos.jpg">
+    <h3><i class="fa-solid fa-camera"></i> Fotos Tamaño Carnet o Pasaporte</h3>
+</div>
+
+<div class="promo-item">
+    <img src="img/servicio_seguros.jpg">
+    <h3><i class="fa-solid fa-car-side"></i> Seguros de Vehículos</h3>
+</div>
+
+<div class="promo-item">
+    <img src="img/servicio_pos.jpg">
+    <h3><i class="fa-solid fa-credit-card"></i> Agente Banpro</h3>
+</div>
+
+<div class="promo-item">
+    <img src="img/servicio_policia.jpg">
+    <h3><i class="fa-solid fa-shield-halved"></i> Tramites en linea Policiales</h3>
+</div>
+
+<div class="promo-item">
+    <img src="img/servicio_rapibac.jpg">
+    <h3><i class="fa-solid fa-building-columns"></i> RAPIBAC</h3>
+</div>
 
 <div id="formularios"></div>
 </section>
 
 <footer>
-<p>&copy; 2025 Tecno🥭Rivas</p>
+<div class="footer-container">
+    <p>&copy; 2025 Tecno🥭Rivas</p>
+</div>
 </footer>
 
 <script>
-// SLIDER
-let index = 0;
-const slides = document.querySelectorAll(".banner-slide");
-function slider(){
-slides.forEach(s=>s.style.display="none");
-index++; if(index>slides.length){index=1}
-slides[index-1].style.display="block";
-setTimeout(slider,4000);
+// BANNER
+let slideIndex = 0;
+const slides = document.getElementsByClassName("banner-slide");
+function showSlides() {
+    for (let i = 0; i < slides.length; i++) slides[i].style.opacity = 0;
+    slideIndex++;
+    if (slideIndex > slides.length) slideIndex = 1;
+    slides[slideIndex - 1].style.opacity = 1;
+    setTimeout(showSlides, 4000);
 }
-slider();
+showSlides();
 
-// FORMULARIOS
+// ================== FORMULARIOS (CORREGIDO) ==================
 const formularios = {
-"Impresiones y Copias":`
-<input id="nombre" placeholder="Nombre">
+
+"Impresiones y Copias": `
+<input id="nombre" placeholder="Su nombre">
 <input id="cantidad" type="number" placeholder="Cantidad">
-<textarea id="nota" placeholder="Detalles"></textarea>`,
+<textarea id="nota" placeholder="Detalles del trabajo..."></textarea>
+<p class="info">Adjunte en WhatsApp el archivo a imprimir.</p>
+`,
 
-"Escaneo y Digitalización":`
-<input id="nombre" placeholder="Nombre">
-<select id="cantidad"><option>1-5</option><option>6-20</option></select>
-<textarea id="nota"></textarea>`,
+"Escaneo y Digitalización": `
+<input id="nombre" placeholder="Su nombre">
+<select id="cantidad">
+<option>1-5</option>
+<option>6-20</option>
+<option>Más de 20</option>
+</select>
+<textarea id="nota" placeholder="Nota adicional..."></textarea>
+`,
 
-"Diseño y Edición":`
-<input id="nombre">
-<select id="tipo"><option>Logo</option><option>Poster</option></select>
-<textarea id="nota"></textarea>`,
+"Diseño y Edición": `
+<input id="nombre" placeholder="Su nombre">
+<select id="tipo">
+<option>Logo</option>
+<option>Currículum</option>
+<option>Tarjeta</option>
+<option>Poster</option>
+</select>
+<textarea id="nota" placeholder="Detalles del diseño..."></textarea>
+`,
 
-"Encolochado":`
-<input id="nombre">
-<input id="cantidad" type="number">
-<textarea id="nota"></textarea>`,
+"Encolochado": `
+<input id="nombre" placeholder="Su nombre">
+<select id="tipo">
+<option>Espiral</option>
+<option>Térmico</option>
+</select>
+<input id="cantidad" type="number" placeholder="Cantidad de hojas">
+<textarea id="nota" placeholder="Nota adicional..."></textarea>
+`,
 
-"Fotocopias":`
-<input id="nombre">
-<input id="cantidad" type="number">
-<textarea id="nota"></textarea>`,
+"Fotocopias": `
+<input id="nombre" placeholder="Su nombre">
+<input id="cantidad" type="number" placeholder="Cantidad de copias">
+<textarea id="nota" placeholder="Nota adicional..."></textarea>
+`,
 
-"Fotos Tamaño Carnet o Pasaporte":`
-<input id="nombre">
-<select><option>Carnet</option><option>Pasaporte</option></select>`,
+"Fotos Tamaño Carnet o Pasaporte": `
+<input id="nombre" placeholder="Su nombre">
+<select id="tipo">
+<option>Carnet</option>
+<option>Pasaporte</option>
+</select>
+<input id="cantidad" type="number" placeholder="Cantidad">
+<textarea id="nota" placeholder="Nota adicional..."></textarea>
+`,
 
-"Seguros de Vehículos":`
-<input id="nombre">
-<input id="placa">
-<textarea id="nota"></textarea>`,
+"Seguros de Vehículos": `
+<input id="nombre" placeholder="Su nombre">
+<select id="seguro">
+<option>Cobertura total</option>
+<option>Daños a terceros</option>
+<option>Renovación</option>
+</select>
+<input id="placa" placeholder="Placa del vehículo">
+<input id="anio" type="number" placeholder="Año del vehículo">
+<textarea id="nota" placeholder="Nota adicional..."></textarea>
+`,
 
-"Agente Banpro":`
-<input id="nombre">
-<select><option>Retiro</option><option>Pago</option></select>`,
+"Agente Banpro": `
+<input id="nombre" placeholder="Su nombre">
+<select id="servicio">
+<option>Retiro</option>
+<option>Depósito</option>
+<option>Pago de servicios</option>
+</select>
+<input id="monto" type="number" placeholder="Monto">
+<textarea id="nota" placeholder="Detalle adicional..."></textarea>
+`,
 
-"RAPIBAC":`
-<input id="nombre">
-<input id="monto" type="number">`,
+"Tramites en linea Policiales": `
+<input id="nombre" placeholder="Nombre completo">
+<input id="cedula" placeholder="Número de cédula">
+<textarea id="nota" placeholder="Detalle adicional..."></textarea>
+`,
 
-"Tramites en linea Policiales":`
-<input id="nombre">
-<input id="cedula">
-<textarea id="nota"></textarea>`
+"RAPIBAC": `
+<input id="nombre" placeholder="Su nombre">
+<input id="monto" type="number" placeholder="Monto">
+<textarea id="nota" placeholder="Detalles adicionales..."></textarea>
+`
+
 };
 
-// MODAL
-document.getElementById("formularios").innerHTML=`
+// ================== MODAL ==================
+document.getElementById("formularios").innerHTML = `
 <div id="overlay" class="form-overlay">
 <div class="form-box">
-<h2 id="titulo"></h2>
+<h2 id="titulo-form"></h2>
 <div id="campos"></div>
-<button class="btn-send" id="enviar">Enviar</button>
-<button class="btn-close" onclick="cerrar()">Cerrar</button>
+<button class="btn-send" id="enviar">Enviar Solicitud</button>
+<button class="btn-close" onclick="cerrarFormulario()">Cerrar</button>
 </div>
-</div>`;
+</div>
+`;
 
-const overlay=document.getElementById("overlay");
+const overlay = document.getElementById("overlay");
 
 document.querySelectorAll(".promo-item").forEach(item=>{
 item.onclick=()=>{
-let s=item.innerText.trim();
-document.getElementById("titulo").innerText=s;
-document.getElementById("campos").innerHTML=formularios[s];
+const servicio = item.querySelector("h3").innerText.replace(/^[^ ]+ /,"");
+document.getElementById("titulo-form").innerText = servicio;
+document.getElementById("campos").innerHTML = formularios[servicio];
 overlay.style.display="flex";
-document.getElementById("enviar").onclick=()=>enviar(s);
-}
+document.getElementById("enviar").onclick=()=>enviarWhatsApp(servicio);
+};
 });
 
-function cerrar(){overlay.style.display="none";}
+function cerrarFormulario(){ overlay.style.display="none"; }
 
-function enviar(servicio){
-let msg=`Servicio: ${servicio}%0A`;
-document.querySelectorAll("#campos input, textarea, select").forEach(c=>{
-msg+=`${c.placeholder||"Dato"}: ${c.value}%0A`;
+function enviarWhatsApp(servicio){
+let mensaje = `Solicitud: ${servicio}%0A`;
+document.querySelectorAll("#campos input, #campos select, #campos textarea")
+.forEach(c=>{
+mensaje += `${c.placeholder}: ${c.value}%0A`;
 });
-window.location.href=`https://wa.me/50557733013?text=${msg}`;
+window.location.href = `https://wa.me/50557733013?text=${mensaje}`;
 }
+
+// MENU MOVIL
+document.getElementById("mobile-menu").onclick=()=>{
+document.getElementById("navbar").classList.toggle("active");
+};
 </script>
 
 </body>
