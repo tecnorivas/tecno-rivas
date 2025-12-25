@@ -78,7 +78,6 @@
 }
 </style>
 </head>
-
 <body>
 
 <header>
@@ -98,11 +97,11 @@
 </header>
 
 <div class="banner-container">
-    <img class="banner-slide fade" src="img/banner1.jpg">
-    <img class="banner-slide fade" src="img/banner2.jpg">
-    <img class="banner-slide fade" src="img/banner3.jpg">
-    <img class="banner-slide fade" src="img/banner4.jpg">
-    <img class="banner-slide fade" src="img/banner5.jpg">
+    <img class="banner-slide fade" src="img/banner1.jpg" alt="">
+    <img class="banner-slide fade" src="img/banner2.jpg" alt="">
+    <img class="banner-slide fade" src="img/banner3.jpg" alt="">
+    <img class="banner-slide fade" src="img/banner4.jpg" alt="">
+    <img class="banner-slide fade" src="img/banner5.jpg" alt="">
 </div>
 
 <section class="intro">
@@ -115,70 +114,77 @@
 
 <section class="promos">
 <div class="promo-item">
-    <img src="img/servicio_impresion.jpg">
+    <img src="img/servicio_impresion.jpg" alt="Impresiones">
     <h3><i class="fa-solid fa-print"></i> Impresiones y Copias</h3>
+    <p>Impresiones a color y blanco y negro, copias nítidas, documentos, trabajos, tareas y más.</p>
 </div>
 
 <div class="promo-item">
-    <img src="img/servicio_digitalizacion.jpg">
+    <img src="img/servicio_digitalizacion.jpg" alt="Digitalización">
     <h3><i class="fa-solid fa-file-arrow-up"></i> Escaneo y Digitalización</h3>
+    <p>Digitalizamos documentos, fotos y archivos importantes con la mejor calidad.</p>
 </div>
 
 <div class="promo-item">
-    <img src="img/servicio_diseno.jpg">
+    <img src="img/servicio_diseno.jpg" alt="Diseño">
     <h3><i class="fa-solid fa-pen-nib"></i> Diseño y Edición</h3>
+    <p>Hacemos tarjetas, posters, currículums, logos y edición básica de imágenes.</p>
 </div>
 
 <div class="promo-item">
-    <img src="img/servicio_encuadernado.jpg">
+    <img src="img/servicio_encuadernado.jpg" alt="Encuadernado">
     <h3><i class="fa-solid fa-book"></i> Encolochado</h3>
+    <p>Encuadernado de tareas, trabajos universitarios, tesis y documentos.</p>
 </div>
 
 <div class="promo-item">
-    <img src="img/servicio_fotocopias.jpg">
+    <img src="img/servicio_fotocopias.jpg" alt="Fotocopias">
     <h3><i class="fa-solid fa-copy"></i> Fotocopias</h3>
+    <p>Copias rápidas y de calidad para documentos de cualquier tipo.</p>
 </div>
 
 <div class="promo-item">
-    <img src="img/servicio_fotos.jpg">
+    <img src="img/servicio_fotos.jpg" alt="Fotos">
     <h3><i class="fa-solid fa-camera"></i> Fotos Tamaño Carnet o Pasaporte</h3>
+    <p>Tomamos fotografías para carnet o pasaporte con calidad profesional y entrega inmediata.</p>
 </div>
 
 <div class="promo-item">
-    <img src="img/servicio_seguros.jpg">
+    <img src="img/servicio_seguros.jpg" alt="Seguro">
     <h3><i class="fa-solid fa-car-side"></i> Seguros de Vehículos</h3>
+    <p>Tu tranquilidad es nuestra prioridad. Más que un seguro, es un compromiso.</p>
 </div>
-
-<div class="promo-item">
-    <img src="img/servicio_pos.jpg">
-    <h3><i class="fa-solid fa-credit-card"></i> Agente Banpro</h3>
-</div>
-
-<div class="promo-item">
-    <img src="img/servicio_policia.jpg">
-    <h3><i class="fa-solid fa-shield-halved"></i> Tramites en linea Policiales</h3>
-</div>
-
-<div class="promo-item">
-    <img src="img/servicio_rapibac.jpg">
-    <h3><i class="fa-solid fa-building-columns"></i> RAPIBAC</h3>
-</div>
-
 <div id="formularios"></div>
 </section>
 
 <footer>
 <div class="footer-container">
     <p>&copy; 2025 Tecno🥭Rivas</p>
+    <div class="redes">
+        <a href="https://www.facebook.com/p/Tecno-Rivas-100040930213703/?locale=es_LA" target="_blank">
+            <i class="fab fa-facebook-f"></i> Facebook
+        </a>
+        <a href="https://www.instagram.com/tecnorivas2025/" target="_blank">
+            <i class="fab fa-instagram"></i> Instagram
+        </a>
+        <a href="https://wa.me/50557733013" target="_blank">
+            <i class="fab fa-whatsapp"></i> WhatsApp
+        </a>
+    </div>
 </div>
 </footer>
 
 <script>
-// BANNER
+// =========================
+// BANNER ROTATIVO
+// =========================
 let slideIndex = 0;
 const slides = document.getElementsByClassName("banner-slide");
+
 function showSlides() {
-    for (let i = 0; i < slides.length; i++) slides[i].style.opacity = 0;
+    for (let i = 0; i < slides.length; i++) {
+        slides[i].style.opacity = 0;
+    }
     slideIndex++;
     if (slideIndex > slides.length) slideIndex = 1;
     slides[slideIndex - 1].style.opacity = 1;
@@ -186,140 +192,234 @@ function showSlides() {
 }
 showSlides();
 
-// ================== FORMULARIOS (CORREGIDO) ==================
+
+// =========================
+// FORMULARIOS POR SERVICIO
+// =========================
 const formularios = {
 
-"Impresiones y Copias": `
-<input id="nombre" placeholder="Su nombre">
-<input id="cantidad" type="number" placeholder="Cantidad">
-<textarea id="nota" placeholder="Detalles del trabajo..."></textarea>
-<p class="info">Adjunte en WhatsApp el archivo a imprimir.</p>
-`,
+    "Impresiones y Copias": `
+        <input id="nombre" placeholder="Su nombre">
+        <input id="cantidad" type="number" placeholder="Cantidad">
+        <textarea id="nota" placeholder="Detalles del trabajo..."></textarea>
+        <p class="info">Adjunte en WhatsApp el archivo a imprimir.</p>
+    `,
 
-"Escaneo y Digitalización": `
-<input id="nombre" placeholder="Su nombre">
-<select id="cantidad">
-<option>1-5</option>
-<option>6-20</option>
-<option>Más de 20</option>
-</select>
-<textarea id="nota" placeholder="Nota adicional..."></textarea>
-`,
+    "Escaneo y Digitalización": `
+        <input id="nombre" placeholder="Su nombre">
+        <select id="cantidad">
+            <option value="">Cantidad de documentos</option>
+            <option>1-5</option>
+            <option>6-20</option>
+            <option>Más de 20</option>
+        </select>
+        <textarea id="nota" placeholder="Nota adicional..."></textarea>
+        <p class="info">Adjunte en WhatsApp el archivo a escanear.</p>
+    `,
 
-"Diseño y Edición": `
-<input id="nombre" placeholder="Su nombre">
-<select id="tipo">
-<option>Logo</option>
-<option>Currículum</option>
-<option>Tarjeta</option>
-<option>Poster</option>
-</select>
-<textarea id="nota" placeholder="Detalles del diseño..."></textarea>
-`,
+    "Diseño y Edición": `
+        <input id="nombre" placeholder="Su nombre">
+        <select id="tipo">
+            <option value="">Tipo de diseño</option>
+            <option>Logo</option>
+            <option>Currículum</option>
+            <option>Tarjeta</option>
+            <option>Poster</option>
+        </select>
+        <textarea id="nota" placeholder="Detalles del diseño..."></textarea>
+    `,
 
-"Encolochado": `
-<input id="nombre" placeholder="Su nombre">
-<select id="tipo">
-<option>Espiral</option>
-<option>Térmico</option>
-</select>
-<input id="cantidad" type="number" placeholder="Cantidad de hojas">
-<textarea id="nota" placeholder="Nota adicional..."></textarea>
-`,
+    "Encolochado": `
+        <input id="nombre" placeholder="Su nombre">
+        <select id="tipo">
+            <option value="">Tipo de encuadernado</option>
+            <option>Espiral</option>
+            <option>Térmico</option>
+        </select>
+        <input id="cantidad" type="number" placeholder="Cantidad de hojas">
+        <textarea id="nota" placeholder="Nota adicional..."></textarea>
+    `,
 
-"Fotocopias": `
-<input id="nombre" placeholder="Su nombre">
-<input id="cantidad" type="number" placeholder="Cantidad de copias">
-<textarea id="nota" placeholder="Nota adicional..."></textarea>
-`,
+    "Fotocopias": `
+        <input id="nombre" placeholder="Su nombre">
+        <input id="cantidad" type="number" placeholder="Cantidad de copias">
+        <textarea id="nota" placeholder="Nota adicional..."></textarea>
+    `,
 
-"Fotos Tamaño Carnet o Pasaporte": `
-<input id="nombre" placeholder="Su nombre">
-<select id="tipo">
-<option>Carnet</option>
-<option>Pasaporte</option>
-</select>
-<input id="cantidad" type="number" placeholder="Cantidad">
-<textarea id="nota" placeholder="Nota adicional..."></textarea>
-`,
+    "Fotos Tamaño Carnet o Pasaporte": `
+        <input id="nombre" placeholder="Su nombre">
+        <select id="tipo">
+            <option value="">Tipo de foto</option>
+            <option>Carnet</option>
+            <option>Pasaporte</option>
+        </select>
+        <input id="cantidad" type="number" placeholder="Cantidad">
+        <textarea id="nota" placeholder="Nota adicional..."></textarea>
+        <p class="info">Las fotos son tomadas en la tienda.</p>
+    `,
 
-"Seguros de Vehículos": `
-<input id="nombre" placeholder="Su nombre">
-<select id="seguro">
-<option>Cobertura total</option>
-<option>Daños a terceros</option>
-<option>Renovación</option>
-</select>
-<input id="placa" placeholder="Placa del vehículo">
-<input id="anio" type="number" placeholder="Año del vehículo">
-<textarea id="nota" placeholder="Nota adicional..."></textarea>
-`,
+    "Seguros de Vehículos": `
+        <input id="nombre" placeholder="Su nombre">
+        <select id="seguro">
+            <option value="">Tipo de seguro</option>
+            <option>Cobertura total</option>
+            <option>Daños a terceros</option>
+            <option>Renovación</option>
+        </select>
+        <input id="placa" placeholder="Placa del vehículo">
+        <input id="anio" type="number" placeholder="Año del vehículo">
+        <textarea id="nota" placeholder="Nota adicional..."></textarea>
+    `,
 
-"Agente Banpro": `
-<input id="nombre" placeholder="Su nombre">
-<select id="servicio">
-<option>Retiro</option>
-<option>Depósito</option>
-<option>Pago de servicios</option>
-</select>
-<input id="monto" type="number" placeholder="Monto">
-<textarea id="nota" placeholder="Detalle adicional..."></textarea>
-`,
+    "Agente Banpro": `
+        <input id="nombre" placeholder="Su nombre">
+        <select id="servicio">
+            <option value="">Servicio Banpro</option>
+            <option>Retiro de efectivo</option>
+            <option>Depósito</option>
+            <option>Pago de tarjeta</option>
+            <option>Pago de préstamos</option>
+            <option>Pago de servicios básicos</option>
+        </select>
+        <input id="monto" type="number" placeholder="Monto">
+        <textarea id="nota" placeholder="Detalle adicional..."></textarea>
+        <p class="info">Servicio realizado presencialmente en tienda.</p>
+    `,
 
-"Tramites en linea Policiales": `
-<input id="nombre" placeholder="Nombre completo">
-<input id="cedula" placeholder="Número de cédula">
-<textarea id="nota" placeholder="Detalle adicional..."></textarea>
-`,
+    "RAPIBAC": `
+        <input id="nombre" placeholder="Su nombre">
+        <select id="servicio">
+            <option value="">Servicio RAPIBAC</option>
+            <option>Pago de servicios</option>
+            <option>Pago de tarjeta</option>
+            <option>Recarga telefónica</option>
+        </select>
+        <input id="referencia" placeholder="Número de referencia / cuenta">
+        <input id="monto" type="number" placeholder="Monto">
+        <textarea id="nota" placeholder="Detalles adicionales..."></textarea>
+        <p class="info">Conserve su comprobante de pago.</p>
+    `,
 
-"RAPIBAC": `
-<input id="nombre" placeholder="Su nombre">
-<input id="monto" type="number" placeholder="Monto">
-<textarea id="nota" placeholder="Detalles adicionales..."></textarea>
-`
-
+    "Tramites en linea Policiales": `
+        <input id="nombre" placeholder="Nombre completo">
+        <input id="cedula" placeholder="Número de cédula">
+        <select id="tramite">
+            <option value="">Tipo de trámite</option>
+            <option>Récord policial</option>
+            <option>Pago de multa</option>
+            <option>Licencia - renovación</option>
+            <option>Licencia - reposición</option>
+        </select>
+        <textarea id="nota" placeholder="Detalle adicional..."></textarea>
+        <p class="info">Todos los pagos se realizan en tienda.</p>
+    `
 };
 
-// ================== MODAL ==================
-document.getElementById("formularios").innerHTML = `
+
+// =========================
+// OVERLAY DEL FORMULARIO
+// =========================
+const contenedor = document.getElementById("formularios");
+contenedor.innerHTML = `
 <div id="overlay" class="form-overlay">
-<div class="form-box">
-<h2 id="titulo-form"></h2>
-<div id="campos"></div>
-<button class="btn-send" id="enviar">Enviar Solicitud</button>
-<button class="btn-close" onclick="cerrarFormulario()">Cerrar</button>
-</div>
+    <div class="form-box">
+        <h2 id="titulo-form"></h2>
+        <div id="campos"></div>
+        <button class="btn-send" id="enviar">Enviar Solicitud</button>
+        <button class="btn-close" onclick="cerrarFormulario()">Cerrar</button>
+    </div>
 </div>
 `;
 
 const overlay = document.getElementById("overlay");
 
-document.querySelectorAll(".promo-item").forEach(item=>{
-item.onclick=()=>{
-const servicio = item.querySelector("h3").innerText.replace(/^[^ ]+ /,"");
-document.getElementById("titulo-form").innerText = servicio;
-document.getElementById("campos").innerHTML = formularios[servicio];
-overlay.style.display="flex";
-document.getElementById("enviar").onclick=()=>enviarWhatsApp(servicio);
-};
-});
 
-function cerrarFormulario(){ overlay.style.display="none"; }
+// =========================
+// ABRIR / CERRAR FORMULARIO
+// =========================
+function abrirFormulario(servicio) {
+    if (!formularios[servicio]) {
+        alert("Formulario no disponible para este servicio.");
+        return;
+    }
 
-function enviarWhatsApp(servicio){
-let mensaje = `Solicitud: ${servicio}%0A`;
-document.querySelectorAll("#campos input, #campos select, #campos textarea")
-.forEach(c=>{
-mensaje += `${c.placeholder}: ${c.value}%0A`;
-});
-window.location.href = `https://wa.me/50557733013?text=${mensaje}`;
+    document.getElementById("titulo-form").innerText = servicio;
+    document.getElementById("campos").innerHTML = formularios[servicio];
+    overlay.style.display = "flex";
+
+    document.getElementById("enviar").onclick = () => validarFormulario(servicio);
 }
 
-// MENU MOVIL
-document.getElementById("mobile-menu").onclick=()=>{
-document.getElementById("navbar").classList.toggle("active");
-};
-</script>
+function cerrarFormulario() {
+    overlay.style.display = "none";
+    document.getElementById("campos").innerHTML = "";
+}
 
+
+// =========================
+// CLICK EN SERVICIOS
+// =========================
+document.querySelectorAll(".promo-item").forEach(item => {
+    item.addEventListener("click", () => {
+        const servicio = item.querySelector("h3").innerText.trim();
+        abrirFormulario(servicio);
+    });
+});
+
+
+// =========================
+// VALIDAR Y ENVIAR
+// =========================
+function validarFormulario(servicio) {
+    const campos = document.querySelectorAll("#campos input, #campos select, #campos textarea");
+    for (let campo of campos) {
+        if (campo.value.trim() === "") {
+            alert("Por favor complete todos los campos antes de enviar.");
+            return;
+        }
+    }
+    enviarWhatsApp(servicio);
+}
+
+function enviarWhatsApp(servicio) {
+    let datos = {};
+    let mensaje = `🛠 *Solicitud de servicio: ${servicio}* %0A`;
+
+    document.querySelectorAll("#campos input, #campos select, #campos textarea")
+        .forEach(campo => {
+            let clave = campo.placeholder || campo.id;
+            mensaje += `%0A• *${clave}:* ${campo.value}`;
+            datos[campo.id || clave] = campo.value;
+        });
+
+    fetch("https://script.google.com/macros/s/AKfycbxHgG51TDptJQJ_xrBYMarfArc6ogbSYMBuMC-OnQLJLZ2ka0sEEQ_F0Yg_pkkkgBPOQA/exec", {
+        method: "POST",
+        body: JSON.stringify({
+            servicio,
+            nombre: datos.nombre || "",
+            detalles: JSON.stringify(datos),
+            nota: datos.nota || ""
+        })
+    });
+
+    cerrarFormulario();
+
+    const telefono = "50557733013";
+    window.location.href = `https://wa.me/${telefono}?text=${mensaje}`;
+}
+
+
+// =========================
+// MENÚ MÓVIL
+// =========================
+const menuToggle = document.getElementById("mobile-menu");
+const navbar = document.getElementById("navbar");
+const header = document.querySelector("header");
+
+menuToggle.addEventListener("click", () => {
+    navbar.classList.toggle("active");
+    header.classList.toggle("menu-abierto");
+});
+</script>
 </body>
 </html>
