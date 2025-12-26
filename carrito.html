@@ -170,6 +170,21 @@
                 <option value="Delivery">Delivery</option>
             </select>
 
+<!-- Aviso de delivery -->
+<div id="aviso-delivery" style="
+    display:none;
+    margin-top:10px;
+    background:#fff3cd;
+    color:#856404;
+    padding:12px;
+    border-radius:10px;
+    border:1px solid #ffeeba;
+    font-size:15px;
+">
+    🚚 <strong>Delivery disponible solo en el casco urbano de Rivas.</strong>
+</div>
+
+            
             <select id="tipo-pago">
                 <option value="">Seleccione método de pago</option>
                 <option value="Efectivo">Efectivo</option>
@@ -369,6 +384,20 @@ window.location.href = url;
         }
     });
 
+/* -----------------------
+   Mostrar aviso de delivery
+------------------------ */
+document.getElementById("tipo-entrega").addEventListener("change", () => {
+    const entrega = document.getElementById("tipo-entrega").value;
+    const aviso = document.getElementById("aviso-delivery");
+
+    if (entrega === "Delivery") {
+        aviso.style.display = "block";
+    } else {
+        aviso.style.display = "none";
+    }
+});
+       
     /* -----------------------
        MENÚ MÓVIL
     ------------------------ */
