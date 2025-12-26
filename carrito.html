@@ -352,6 +352,7 @@ total = total.replace("Total: ", ""); // "C$ 1200"
         let mensaje = "🛒 *Nuevo pedido desde Tecno🥭Rivas:*%0A%0A";
         carrito.forEach(p => {
             mensaje += `• ${p.producto} - C$ ${p.precio}%0A`;
+            mensaje += `  Imagen: ${p.imagen}%0A%0A`;
         });
 
         mensaje += `%0A*Entrega:* ${entrega}`;
