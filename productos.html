@@ -138,22 +138,23 @@ function mostrarProductos(productos) {
     const productList = document.getElementById("product-list");
     productList.innerHTML = "";
 
-    if (productos.length === 0) {
+    if (!productos || productos.length === 0) {
         productList.innerHTML = "<p>No se encontraron productos.</p>";
         return;
     }
 
     productos.forEach(item => {
-        if (!item.producto) return;
+        if (!item.productos) return;
 
         const card = document.createElement("div");
         card.className = "product-card";
 
-        const imgSrc = item.imagen?.startsWith("http") ? item.imagen : "img/" + item.imagen;
+        const imagenLimpia = item.imagen?.toString().trim();
+        const imgSrc = imagenLimpia?.startsWith("http") ? imagenLimpia : "img/" + imagenLimpia;
 
         card.innerHTML = `
             <img src="${imgSrc}">
-            <h3>${item.producto}</h3>
+            <h3>${item.productos}</h3>
             <p>${item.descripcion || ""}</p>
             <p class="precio">C$ ${item.precio || ""}</p>
             <button class="btn-comprar">
@@ -161,8 +162,9 @@ function mostrarProductos(productos) {
             </button>
         `;
 
+        // 👉 AQUÍ ESTÁ LA CORRECCIÓN IMPORTANTE
         card.querySelector("button").onclick = () => agregarAlCarrito({
-            producto: item.producto,
+            nombre: item.productos,
             precio: item.precio,
             imagen: imgSrc
         });
@@ -176,15 +178,17 @@ function mostrarProductos(productos) {
 // ============================
 document.getElementById("buscador").addEventListener("input", function () {
     const texto = this.value.toLowerCase();
+
     const filtrados = productosGlobal.filter(item =>
-        item.producto?.toLowerCase().includes(texto) ||
+        item.productos?.toLowerCase().includes(texto) ||
         item.descripcion?.toLowerCase().includes(texto)
     );
+
     mostrarProductos(filtrados);
 });
 
 // ============================
-// CARGAR SHEETS
+// CARGAR DESDE GOOGLE SHEETS
 // ============================
 const script = document.createElement("script");
 script.src = "https://script.google.com/macros/s/AKfycbxHgG51TDptJQJ_xrBYMarfArc6ogbSYMBuMC-OnQLJLZ2ka0sEEQ_F0Yg_pkkkgBPOQA/exec?callback=procesarProductos";
@@ -195,27 +199,38 @@ document.body.appendChild(script);
 // ============================
 function agregarAlCarrito(producto) {
     const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
     carrito.push(producto);
+
     localStorage.setItem("carrito", JSON.stringify(carrito));
-    alert(`${producto.producto} fue añadido al carrito`);
+
+    alert(`${producto.nombre} fue añadido al carrito`);
 }
 
 // ============================
 // BANNER
 // ============================
 let slideIndex = 0;
+
 function iniciarBanner() {
     const slides = document.getElementsByClassName("banner-slide");
+
     function showSlides() {
-        for (let i = 0; i < slides.length; i++) slides[i].style.opacity = 0;
+        for (let i = 0; i < slides.length; i++) {
+            slides[i].style.opacity = 0;
+        }
+
         slideIndex = (slideIndex + 1) > slides.length ? 1 : slideIndex + 1;
         slides[slideIndex - 1].style.opacity = 1;
+
         setTimeout(showSlides, 4000);
     }
+
     showSlides();
 }
+
 // ============================
-// MENÚ MÓVIL (CORREGIDO)
+// MENÚ MÓVIL
 // ============================
 const menuToggle = document.getElementById("mobile-menu");
 const navbar = document.getElementById("navbar");
@@ -226,6 +241,9 @@ menuToggle.addEventListener("click", () => {
     header.classList.toggle("menu-abierto");
 });
 
+// ============================
+// INICIO
+// ============================
 window.addEventListener("DOMContentLoaded", iniciarBanner);
 </script>
 
