@@ -164,7 +164,7 @@ function mostrarProductos(productos) {
 
         // 👉 AQUÍ ESTÁ LA CORRECCIÓN IMPORTANTE
         card.querySelector("button").onclick = () => agregarAlCarrito({
-            nombre: item.productos,
+            producto: item.productos,
             precio: item.precio,
             imagen: imgSrc
         });
