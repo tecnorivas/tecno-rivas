@@ -198,13 +198,21 @@ document.body.appendChild(script);
 // CARRITO
 // ============================
 function agregarAlCarrito(producto) {
+
     const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
-    carrito.push(producto);
+    const productoCarrito = {
+        producto: producto.producto || producto.nombre || "Producto sin nombre",
+        nombre: producto.producto || producto.nombre || "Producto sin nombre",
+        precio: producto.precio || 0,
+        imagen: producto.imagen || ""
+    };
+
+    carrito.push(productoCarrito);
 
     localStorage.setItem("carrito", JSON.stringify(carrito));
 
-    alert(`${producto.producto} fue añadido al carrito`);
+    alert(`${productoCarrito.producto} fue añadido al carrito`);
 }
 
 // ============================
